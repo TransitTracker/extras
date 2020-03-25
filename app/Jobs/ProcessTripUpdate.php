@@ -2,7 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Trip;
+use App\Model\Trip;
+use App\Model\Sight;
 use GuzzleHttp\Client;
 use FelixINX\TransitRealtime\FeedMessage;
 
@@ -88,7 +89,7 @@ class ProcessTripUpdate extends Job
                 }
 
                 // Create or update the trip
-                Trip::updateOrCreate(
+                $finalTrip = Trip::updateOrCreate(
                     ['trip_id' => $entity->getId()],
                     [
                         'start_time' => $entity->getTripUpdate()->getTrip()->getStartTime(),
@@ -96,6 +97,16 @@ class ProcessTripUpdate extends Job
                         'stop_time_updates' => $stopTimeUpdates
                     ]
                 );
+
+                // Create the sight
+                $sight = Sight::updateOrCreate(
+                    ['trip_id' => $finalTrip->id],
+                    [
+                        strtolower(date('l'))=> true
+                    ]
+                );
+                $finalTrip->sight = $sight->id;
+                $finalTrip->save();
             }
         }
 

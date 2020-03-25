@@ -11,8 +11,8 @@
 |
 */
 
+use App\Model\Trip;
 use App\Jobs\ProcessTripUpdate;
-use App\Trip;
 use FelixINX\TransitRealtime\FeedMessage;
 
 $router->get('/', function () use ($router) {
@@ -21,5 +21,9 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/dispatch', function () use ($router) {
-    dispatch(new ProcessTripUpdate());
+    if (app()->environment('local')) {
+//        dispatch(new ProcessTripUpdate());
+    }
+
+    redirect('/');
 });

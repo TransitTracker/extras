@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,4 +23,12 @@ class Trip extends Model
     protected $casts = [
         'stop_time_updates' => 'array'
     ];
+
+    /**
+     * Get the sight that owns this trip.
+     */
+    public function sight()
+    {
+        return $this->belongsTo(Sight::class);
+    }
 }

@@ -15,6 +15,9 @@
 <!-- As a heading -->
 <nav class="navbar navbar-light bg-light">
     <span class="navbar-brand mb-0 h1">School and industrial extras</span>
+    @if(app()->environment('local'))
+        <a href="/dispatch" class="btn btn-dark float-right">Refresh</a>
+    @endif
 </nav>
 
 <div class="container-fluid pt-3">

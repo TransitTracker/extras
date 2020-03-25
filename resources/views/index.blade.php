@@ -2,15 +2,62 @@
 
 @section('content')
     <div class="accordion" id="accordion">
-        <div class="card">
-            @foreach($trips as $trip)
-                <div class="card-header" id="heading{{ $trip->id }}">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ $trip->id }}" aria-expanded="false" aria-controls="collapse{{ $trip->id }}">
-                        <b>{{ $trip->trip_id }}</b> at {{ $trip->start_time }} on {{ $trip->route_id }}
-                    </button>
+        @foreach($trips as $trip)
+            <div class="card">
+                <div class="card-header row" id="heading{{ $trip->id }}">
+                    <div class="col-6 col-md-4">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ $trip->id }}" aria-expanded="false" aria-controls="collapse{{ $trip->id }}">
+                            <b>{{ $trip->trip_id }}</b>
+                        </button>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        At {{ $trip->start_time }} on
+                        @if(strpos($trip->route_id, 'E') !== false)
+                            <div class="badge badge-info">
+                                {{ $trip->route_id }}
+                            </div>
+                        @else
+                            <div class="badge badge-warning">
+                                {{ $trip->route_id }}
+                            </div>
+                        @endif
+                    </div>
+                    @if($trip->sight)
+                        <div class="col-12 col-md-4">
+                            @if($trip->sight->monday)
+                                <b>Mon</b>
+                            @endif
+                            @if($trip->sight->tuesday)
+                                <b>Tue</b>
+                            @endif
+                            @if($trip->sight->wednesday)
+                                <b>Wed</b>
+                            @endif
+                            @if($trip->sight->thursday)
+                                <b>Thu</b>
+                            @endif
+                            @if($trip->sight->friday)
+                                <b>Fri</b>
+                            @endif
+                            @if($trip->sight->saturday)
+                                <b>Sat</b>
+                            @endif
+                            @if($trip->sight->sunday)
+                                <b>Sun</b>
+                            @endif
+                        </div>
+                    @endif
                 </div>
                 <div class="collapse" id="collapse{{ $trip->id }}" aria-labelledby="heading{{ $trip->id }}" data-parent="#accordion">
                     <div>
+                        <div class="row card-body">
+                            <div class="col-6">
+                                <b>First sight:</b> {{ $trip->created_at }}
+                            </div>
+                            <div class="col-6">
+                                <b>Last sight:</b> {{ $trip->updated_at }}
+                            </div>
+                        </div>
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>
@@ -35,7 +82,7 @@
                         </table>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
 @endsection
