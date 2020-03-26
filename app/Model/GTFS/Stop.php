@@ -19,7 +19,8 @@ class Stop extends Model
      * @var array
      */
     protected $fillable = [
-        'stop_id', 'stop_name', 'stop_lat', 'stop_lon'
+        'stop_id', 'stop_code', 'stop_name', 'stop_lat', 'stop_lon', 'stop_url', 'location_type', 'parent_station',
+        'wheelchair_boarding'
     ];
 
     /**

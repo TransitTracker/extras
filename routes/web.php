@@ -11,9 +11,11 @@
 |
 */
 
+use App\Jobs\GenerateCsvFiles;
+use App\Jobs\GenerateStaticGtfs;
 use App\Model\Trip;
 use App\Jobs\ProcessTripUpdate;
-use FelixINX\TransitRealtime\FeedMessage;
+use Illuminate\Support\Facades\Storage;
 
 $router->get('/', function () use ($router) {
     $trips = Trip::all();
@@ -22,8 +24,22 @@ $router->get('/', function () use ($router) {
 
 $router->get('/dispatch', function () use ($router) {
     if (app()->environment('local')) {
-//        dispatch(new ProcessTripUpdate());
+        dispatch(new ProcessTripUpdate());
     }
 
-    redirect('/');
+    return redirect('/');
+});
+
+$router->get('/generate', function () use ($router) {
+    if (app()->environment('local')) {
+        dispatch(new GenerateStaticGtfs());
+        dispatch(new GenerateCsvFiles());
+    }
+
+    return redirect('/');
+});
+
+$router->get('/download', function () use ($router) {
+    $directories = Storage::directories('public');
+    return view ('download', compact('directories'));
 });

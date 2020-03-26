@@ -2,10 +2,13 @@
 
 namespace App\Model\GTFS;
 
+use Sushi\Sushi;
 use Illuminate\Database\Eloquent\Model;
 
 class Agency extends Model
 {
+    use Sushi;
+
     /**
      * The table associated with the model.
      *
@@ -14,12 +17,18 @@ class Agency extends Model
     protected $table = 'gtfs_agency';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * Define the static rows
      */
-    protected $fillable = [
-        'agency_id', 'agency_name', 'agency_url'
+    protected $rows = [
+        [
+            'agency_id' => 'STM',
+            'agency_name' => 'Société de transport de Montréal',
+            'agency_url' => 'http://www.stm.info',
+            'agency_timezone' => 'America/Montreal',
+            'agency_lang' => 'fr',
+            'agency_phone' => '',
+            'agency_fare_url' => 'http://www.stm.info/fr/infos/titres-et-tarifs'
+        ]
     ];
 
     /**

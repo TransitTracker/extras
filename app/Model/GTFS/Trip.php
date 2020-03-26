@@ -19,7 +19,8 @@ class Trip extends Model
      * @var array
      */
     protected $fillable = [
-        'gtfs_route_id', 'gtfs_service_id', 'trip_id', 'trip_headsign', 'trip_short_name', 'shape_id'
+        'gtfs_route_id', 'gtfs_service_id', 'trip_id', 'trip_headsign', 'direction_id', 'shape_id',
+        'weelchair_accessible', 'note_fr', 'note_en'
     ];
 
     /**

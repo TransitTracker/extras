@@ -14,10 +14,14 @@
 
 <!-- As a heading -->
 <nav class="navbar navbar-light bg-light">
-    <span class="navbar-brand mb-0 h1">School and industrial extras</span>
-    @if(app()->environment('local'))
-        <a href="/dispatch" class="btn btn-dark float-right">Refresh</a>
-    @endif
+    <a href="/" class="navbar-brand mb-0 h1">School and industrial extras</a>
+    <div class="btn-group float-right" role="group" aria-label="Main actions">
+        @if(app()->environment('local'))
+            <a href="/dispatch" class="btn btn-dark">Refresh</a>
+            <a href="/generate" class="btn btn-dark">Generate GTFS</a>
+        @endif
+            <a href="/download" class="btn btn-dark">Download</a>
+    </div>
 </nav>
 
 <div class="container-fluid pt-3">

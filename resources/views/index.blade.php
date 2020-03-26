@@ -85,4 +85,14 @@
             </div>
         @endforeach
     </div>
+
+    <style>
+        .badge-info {
+            background-color: #369a3d !important;
+        }
+
+        .badge-warning {
+            background-color: #c6c6c6 !important;
+        }
+    </style>
 @endsection

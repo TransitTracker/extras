@@ -19,15 +19,23 @@ class CreateGtfsTables extends Migration
             $table->string('agency_name');
             $table->string('agency_url');
             $table->string('agency_timezone');
+            $table->string('agency_lang');
+            $table->string('agency_phone')->nullable();
+            $table->string('agency_fare_url');
             $table->timestamps();
         });
 
         Schema::create('gtfs_stops', function (Blueprint $table) {
             $table->id();
             $table->string('stop_id');
+            $table->string('stop_code');
             $table->string('stop_name');
             $table->float('stop_lat', 7, 5);
             $table->float('stop_lon', 7, 5);
+            $table->string('stop_url')->nullable();
+            $table->string('location_type')->default(0);
+            $table->string('parent_station')->nullable();
+            $table->string('wheelchair_boarding')->default(0);
             $table->timestamps();
 
         });
@@ -38,7 +46,7 @@ class CreateGtfsTables extends Migration
             $table->unsignedInteger('gtfs_agency_id');
             $table->string('route_short_name');
             $table->string('route_long_name');
-            $table->string('route_type');
+            $table->string('route_type')->default(3);
             $table->string('route_url')->nullable();
             $table->string('route_color');
             $table->string('route_text_color')->nullable();
@@ -51,8 +59,11 @@ class CreateGtfsTables extends Migration
             $table->unsignedInteger('gtfs_service_id');
             $table->string('trip_id')->unique();
             $table->string('trip_headsign')->nullable();
-            $table->string('trip_short_name')->nullable();
+            $table->boolean('direction_id')->nullable();
             $table->string('shape_id')->nullable();
+            $table->string('weelchair_accessible')->nullable();
+            $table->string('note_fr')->nullable();
+            $table->string('note_en')->nullable();
             $table->timestamps();
         });
 
@@ -63,6 +74,7 @@ class CreateGtfsTables extends Migration
             $table->time('departure_time');
             $table->unsignedInteger('gtfs_stop_id');
             $table->integer('stop_sequence');
+            $table->timestamps();
         });
 
         Schema::create('gtfs_calendar', function (Blueprint $table) {
@@ -77,6 +89,7 @@ class CreateGtfsTables extends Migration
             $table->boolean('sunday');
             $table->date('start_date');
             $table->date('end_date');
+            $table->timestamps();
         });
 
         Schema::create('gtfs_feed_info', function (Blueprint $table) {
@@ -89,6 +102,7 @@ class CreateGtfsTables extends Migration
             $table->string('feed_version');
             $table->string('feed_contact_email')->nullable();
             $table->string('feed_contact_url');
+            $table->timestamps();
         });
     }
 
@@ -99,9 +113,12 @@ class CreateGtfsTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists([
-            'gtfs_agency', 'gtfs_stops', 'gtfs_routes', 'gtfs_trips', 'gtfs_stop_times', 'gtfs_calendar',
-            'gtfs_feed_info'
-        ]);
+        Schema::dropIfExists('gtfs_agency');
+        Schema::dropIfExists('gtfs_stops');
+        Schema::dropIfExists('gtfs_routes');
+        Schema::dropIfExists('gtfs_trips');
+        Schema::dropIfExists('gtfs_stop_times');
+        Schema::dropIfExists('gtfs_calendar');
+        Schema::dropIfExists('gtfs_feed_info');
     }
 }

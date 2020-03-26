@@ -6,10 +6,13 @@
     "type": "project",
     "require": {
         "php": "^7.2.5",
+        "calebporzio/sushi": "^2.0",
         "felixinx/gtfs-realtime-protobuf-php": "@dev",
         "guzzlehttp/guzzle": "~6.0",
         "laravel/lumen-framework": "^7.0",
-        "laravel/tinker": "^2.3"
+        "laravel/tinker": "^2.3",
+        "league/csv": "^9.6",
+        "league/flysystem": " ~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
