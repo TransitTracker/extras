@@ -105,7 +105,7 @@ class ProcessTripUpdate extends Job
                         strtolower(date('l'))=> true
                     ]
                 );
-                $finalTrip->sight = $sight->id;
+                $finalTrip->sight_id = $sight->id;
                 $finalTrip->save();
             }
         }
