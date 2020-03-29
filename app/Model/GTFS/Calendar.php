@@ -2,6 +2,7 @@
 
 namespace App\Model\GTFS;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class Calendar extends Model
@@ -29,5 +30,16 @@ class Calendar extends Model
     public function trips()
     {
         return $this->hasMany(Trip::class, 'gtfs_service_id');
+    }
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Ymd');
     }
 }

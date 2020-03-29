@@ -2,6 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Model\GTFS\Calendar;
+use App\Model\GTFS\Route;
+use App\Model\GTFS\Stop;
+use App\Model\GTFS\StopTime;
+use App\Model\GTFS\Trip;
 use Carbon\Carbon;
 use App\Model\Sight;
 use GuzzleHttp\Client;
@@ -32,6 +37,12 @@ class GenerateStaticGtfs extends Job
      */
     public function handle()
     {
+        Calendar::truncate();
+        Route::truncate();
+        Stop::truncate();
+        StopTime::truncate();
+        Trip::truncate();
+
         // Todo: service
         $serviceEcole = StaticCalendar::firstOrCreate(
             ['service_id' => '20M-ECOLE-00-S'],
@@ -73,7 +84,7 @@ class GenerateStaticGtfs extends Job
                     'route_long_name' => 'TBD',
                     'route_type' => 3,
                     'route_url' => 'http://www.stm.info/fr/infos/reseaux/bus',
-                    'route_color' => '#369a3d',
+                    'route_color' => '009EE0',
                     'route_text_color' => ''
                 ]
             );
@@ -107,7 +118,7 @@ class GenerateStaticGtfs extends Job
                     'route_long_name' => 'TBD',
                     'route_type' => 3,
                     'route_url' => 'http://www.stm.info/fr/infos/reseaux/bus',
-                    'route_color' => '#c6c6c6',
+                    'route_color' => '009EE0',
                     'route_text_color' => ''
                 ]
             );

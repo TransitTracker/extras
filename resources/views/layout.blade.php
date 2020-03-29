@@ -19,6 +19,7 @@
         @if(app()->environment('local'))
             <a href="/dispatch" class="btn btn-dark">Refresh</a>
             <a href="/generate" class="btn btn-dark">Generate GTFS</a>
+            <a href="/import" class="btn btn-dark">Import stops</a>
         @endif
             <a href="/download" class="btn btn-dark">Download</a>
     </div>

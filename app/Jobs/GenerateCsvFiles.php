@@ -4,12 +4,14 @@ namespace App\Jobs;
 
 use App\Model\GTFS\Stop;
 use App\Model\GTFS\Trip;
+use Illuminate\Support\Facades\Storage;
 use League\Csv\Writer;
 use App\Model\GTFS\Route;
 use App\Model\GTFS\Agency;
 use App\Model\GTFS\Calendar;
 use App\Model\GTFS\FeedInfo;
 use App\Model\GTFS\StopTime;
+use ZipArchive;
 
 class GenerateCsvFiles extends Job
 {
@@ -31,7 +33,18 @@ class GenerateCsvFiles extends Job
     public function handle()
     {
         // Global variables
-        $date = date('Ymd');
+        $folder = 'public/' . date('Ymd');
+        $nothing = '';
+
+        // Create directory structure
+        Storage::makeDirectory($folder);
+        Storage::put($folder . '/agency.txt', $nothing);
+        Storage::put($folder . '/calendar.txt', $nothing);
+        Storage::put($folder . '/feed_info.txt', $nothing);
+        Storage::put($folder . '/routes.txt', $nothing);
+        Storage::put($folder . '/stop_times.txt', $nothing);
+        Storage::put($folder . '/stops.txt', $nothing);
+        Storage::put($folder . '/trips.txt', $nothing);
 
         // agency.txt
         $agencyColumns = [
@@ -39,7 +52,7 @@ class GenerateCsvFiles extends Job
             'agency_fare_url'
         ];
         $agency = Agency::select($agencyColumns)->get();
-        $agencyWriter = Writer::createFromPath(storage_path('app/public/') . $date . '/agency.txt', 'w+');
+        $agencyWriter = Writer::createFromPath(storage_path('app/') . $folder . '/agency.txt', 'w+');
         $agencyWriter->insertOne($agencyColumns);
         foreach ($agency as $agency) {
             $agencyWriter->insertOne($agency->toArray());
@@ -51,7 +64,7 @@ class GenerateCsvFiles extends Job
             'end_date'
         ];
         $calendar = Calendar::select($calendarColumns)->get();
-        $calendarWriter = Writer::createFromPath(storage_path('app/public/') . $date . '/calendar.txt', 'w+');
+        $calendarWriter = Writer::createFromPath(storage_path('app/') . $folder . '/calendar.txt', 'w+');
         $calendarWriter->insertOne($calendarColumns);
         foreach ($calendar as $calendar) {
             $calendarWriter->insertOne($calendar->toArray());
@@ -59,10 +72,10 @@ class GenerateCsvFiles extends Job
 
         // feed_info.txt
         $feedInfoColumns = [
-            'feed_publisher_name', 'feed_publisher_url', 'feed_publisher_url', 'feed_start_date', 'feed_end_date'
+            'feed_publisher_name', 'feed_publisher_url', 'feed_lang', 'feed_start_date', 'feed_end_date'
         ];
         $feedInfo = FeedInfo::select($feedInfoColumns)->get();
-        $feedInfoWriter = Writer::createFromPath(storage_path('app/public/') . $date . '/feed_info.txt', 'w+');
+        $feedInfoWriter = Writer::createFromPath(storage_path('app/') . $folder . '/feed_info.txt', 'w+');
         $feedInfoWriter->insertOne($feedInfoColumns);
         foreach ($feedInfo as $feedInfo) {
             $feedInfoWriter->insertOne($feedInfo->toArray());
@@ -82,7 +95,7 @@ class GenerateCsvFiles extends Job
                 'route_text_color' => $item->route_text_color
             ];
         });
-        $routesWriter = Writer::createFromPath(storage_path('app/public/') . $date . '/routes.txt', 'w+');
+        $routesWriter = Writer::createFromPath(storage_path('app/') . $folder . '/routes.txt', 'w+');
         $routesWriter->insertOne([
             'route_id', 'agency_id', 'route_short_name', 'route_long_name', 'route_type', 'route_url', 'route_color',
             'route_text_color'
@@ -96,7 +109,7 @@ class GenerateCsvFiles extends Job
             'wheelchair_boarding'
         ];
         $stops = Stop::select($stopsColumns)->get();
-        $stopsWriter = Writer::createFromPath(storage_path('app/public/') . $date . '/stops.txt', 'w+');
+        $stopsWriter = Writer::createFromPath(storage_path('app/') . $folder . '/stops.txt', 'w+');
         $stopsWriter->insertOne($stopsColumns);
         foreach ($stops as $stop) {
             $stopsWriter->insertOne($stop->toArray());
@@ -113,7 +126,7 @@ class GenerateCsvFiles extends Job
                 'stop_sequence' => $item->stop_sequence
             ];
         });
-        $stopTimesWriter = Writer::createFromPath(storage_path('app/public/') . $date . '/stop_times.txt', 'w+');
+        $stopTimesWriter = Writer::createFromPath(storage_path('app/') . $folder . '/stop_times.txt', 'w+');
         $stopTimesWriter->insertOne([
             'trip_id', 'arrival_time', 'departure_time', 'stop_id', 'stop_sequence'
         ]);
@@ -134,12 +147,24 @@ class GenerateCsvFiles extends Job
                 'note_en' => $item->note_en
             ];
         });
-        $tripsWriter = Writer::createFromPath(storage_path('app/public/') . $date . '/trips.txt', 'w+');
+        $tripsWriter = Writer::createFromPath(storage_path('app/') . $folder . '/trips.txt', 'w+');
         $tripsWriter->insertOne([
             'route_id', 'service_id', 'trip_id', 'trip_headsign', 'direction_id', 'shape_id', 'wheelchair_accessible',
             'note_fr', 'note_en'
         ]);
         $tripsWriter->insertAll($tripsCollection);
+
+        // Create a ZIP file
+        $zip = new ZipArchive();
+        $files = Storage::files($folder);
+
+        if ($zip->open(storage_path('app/') . $folder . '/gtfs_stm_extended.zip', ZipArchive::CREATE) === true) {
+            foreach ($files as $key => $value) {
+                $zip->addFile(storage_path('app/') . $value, basename($value));
+            }
+
+            $zip->close();
+        }
 
         // Clean all writers
         $agencyWriter = null;
@@ -149,5 +174,6 @@ class GenerateCsvFiles extends Job
         $stopsWriter = null;
         $stopTimesWriter = null;
         $tripsWriter = null;
+        $zip = null;
     }
 }
