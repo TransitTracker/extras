@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Jobs\GenerateCsvFiles;
+use App\Jobs\GenerateStaticGtfs;
+use App\Jobs\ProcessStopFile;
 use App\Jobs\ProcessTripUpdate;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
@@ -25,5 +28,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new ProcessTripUpdate())->everyTenMinutes();
+        $schedule->job(new GenerateStaticGtfs())->dailyAt('00:10');
+        $schedule->job(new ProcessStopFile())->dailyAt('01:10');
+        $schedule->job(new GenerateCsvFiles())->dailyAt('02:10');
     }
 }
