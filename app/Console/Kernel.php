@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->job(new ProcessTripUpdate())->everyTenMinutes();
         $schedule->job(new GenerateStaticGtfs())->dailyAt('00:10');
-        $schedule->job(new ProcessStopFile())->dailyAt('01:10');
+        $schedule->job(new ProcessStopFile(env('STOP_FILE_URL')))->dailyAt('01:10');
         $schedule->job(new GenerateCsvFiles())->dailyAt('02:10');
     }
 }
