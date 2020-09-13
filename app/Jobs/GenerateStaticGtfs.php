@@ -158,7 +158,8 @@ class GenerateStaticGtfs implements ShouldQueue
                     'stop_code' => $stopTimeUpdate['stop_id'],
                     'stop_name' => 'TBD',
                     'stop_lat' => 45.446466,
-                    'stop_lon' => -73.603118
+                    'stop_lon' => -73.603118,
+                    'is_fake' => true
                 ]
             );
 

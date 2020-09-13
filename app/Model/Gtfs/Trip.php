@@ -14,6 +14,13 @@ class Trip extends Model
     protected $table = 'gtfs_trips';
 
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'trip_id';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

@@ -17,6 +17,13 @@ class Agency extends Model
     protected $table = 'gtfs_agency';
 
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'agency_id';
+
+    /**
      * Define the static rows
      */
     protected $rows = [

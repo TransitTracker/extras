@@ -15,6 +15,13 @@ class Calendar extends Model
     protected $table = 'gtfs_calendar';
 
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'service_id';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

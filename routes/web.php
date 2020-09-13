@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Storage;
 
 Route::view('/', 'welcome')->name('home');
 
+Route::get('/stops', function () {
+    return view('stops');
+})->name('stops');
+
 Route::get('/download', function () {
     return view('download')->with('files', Storage::files('public/latest'));
 })->name('download');

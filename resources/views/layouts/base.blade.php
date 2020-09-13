@@ -7,7 +7,7 @@
 
             <title>@yield('title') - {{ config('app.name') }}</title>
         @else
-            <title>{{ config('app.name') }}</title>
+            <title>Transit Tracker Extras Catcher</title>
         @endif
 		
         <!-- Favicon -->

@@ -12,13 +12,29 @@ class TripsView extends Component
 
     public $selectedTrip;
     public $searchTrip;
+    public $searchType;
     public $searchRoute;
 
-    protected $updatesQueryString = ['searchTrip', 'searchRoute'];
+    protected $updatesQueryString = ['searchTrip', 'searchType', 'searchRoute'];
 
-    public function selectTrip(int $id) {
-        $trip = Trip::find($id);
-        $this->selectedTrip = $trip;
+    public function selectTrip(int $id)
+    {
+        $this->selectedTrip = Trip::find($id);
+    }
+
+    public function updatingSearchTrip()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearchType()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearchRoute()
+    {
+        $this->resetPage();
     }
 
     public function mount()
@@ -26,16 +42,17 @@ class TripsView extends Component
         $this->selectedTrip = Trip::first();
         $this->searchTrip = request()->query('searchTrip', $this->searchTrip);
         $this->searchRoute = request()->query('searchRoute', $this->searchRoute);
-        $this->resetPage();
     }
 
     public function render()
     {
         return view('livewire.trips-view', [
             'trips' => Trip::where([
-                ['trip_id', 'like', '%'.$this->searchTrip.'%'],
-                ['route_id', 'like', '%'.$this->searchRoute.'%'],
-            ])->paginate(10),
+                ['trip_id', 'like', "%{$this->searchTrip}%"],
+                ['route_id', 'like', "%{$this->searchType}"],
+                ['route_id', 'like', "%{$this->searchRoute}%"],
+            ],
+            ['searchType' => $this->searchType])->paginate(15),
         ]);
     }
 }

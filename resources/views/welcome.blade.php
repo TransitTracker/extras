@@ -1,15 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex flex-col">
-        <div class="w-full bg-primary-500 p-3 md:px-8 md:py-3 flex items-center justify-between">
-            <h1 class="font-bold text-base md:text-2xl text-white">Extras Catcher</h1>
-{{--            <a href="{{ route('download') }}" class="p-2 bg-primary-700 text-white rounded">Download</a>--}}
-        </div>
-        <div class="flex-grow w-full flex flex-col">
-            <livewire:trips-view />
-        </div>
-    </div>
+    <livewire:trips-view />
 {{--    <div class="fixed z-10 inset-0 overflow-y-auto">--}}
 {{--        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">--}}
 {{--            <!----}}

@@ -14,6 +14,13 @@ class Route extends Model
     protected $table = 'gtfs_routes';
 
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'route_id';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

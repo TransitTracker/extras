@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Model\Gtfs\Stop as StaticStop;
 use App\Model\Sight;
 use App\Model\Trip;
 use FelixINX\TransitRealtime\FeedMessage;
@@ -11,6 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 
 class ProcessTripUpdate implements ShouldQueue
@@ -36,17 +38,21 @@ class ProcessTripUpdate implements ShouldQueue
     {
         // Get the PB file
         $client = new Client();
-        $response = $client->request('POST', 'https://api.stm.info/pub/od/gtfs-rt/ic/v1/tripUpdates', [
-            'headers' => [
-                'apikey' => env('STM_APIKEY')
-            ]
-        ]);
-        Storage::put('tu.pb', $response->getBody()->getContents());
+        if (App::environment('local')) {
+//            $response = $client->get('https://extras.transittracker.ca/storage/tu.pb');
+            $response = $client->get('http://stm-school-industrial-catcher.test/storage/test.pb');
+        } else {
+            $response = $client->request('POST', 'https://api.stm.info/pub/od/gtfs-rt/ic/v1/tripUpdates', [
+                'headers' => [
+                    'apikey' => env('STM_APIKEY')
+                ]
+            ]);
+            Storage::put('public/tu.pb', $response->getBody()->getContents());
+        }
 
         // Convert protobuf
         $feed = new FeedMessage();
         $feed->mergeFromString($response->getBody()->getContents());
-//        $feed->mergeFromString(Storage::get('tu.pb'));
 
         // Get each entity
         foreach ($feed->getEntity() as $entity) {
@@ -80,12 +86,25 @@ class ProcessTripUpdate implements ShouldQueue
                             break;
                     }
 
+                    // Check if stops exists
+                    $stop = StaticStop::firstOrCreate(
+                        ['stop_id' => $item->getStopId()],
+                        [
+                            'stop_code' => $item->getStopId(),
+                            'stop_name' => 'TBD',
+                            'stop_lat' => 0,
+                            'stop_lon' => 0,
+                            'is_fake' => true,
+                        ]
+                    );
+
                     // Build the object and add it to stopTimeUpdates array
                     $newUpdate = (object) [
                         'stop_sequence' => $item->getStopSequence(),
                         'arrival_time' => $arrivalTime,
                         'departure_time' => $departureTime,
                         'stop_id' => $item->getStopId(),
+                        'is_fake' => !$stop ? true : $stop->is_fake,
                         'schedule_relationship' => $scheduleRelationship,
                         'lat' => 0,
                         'lon' => 0,
