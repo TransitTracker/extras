@@ -128,6 +128,7 @@ class ProcessTripUpdate implements ShouldQueue
                         'stop_time_updates' => $stopTimeUpdates
                     ]
                 );
+                $finalTrip->touch();
 
                 // Create the sight
                 $sight = Sight::updateOrCreate(
