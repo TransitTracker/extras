@@ -47,12 +47,12 @@ class ProcessTripUpdate implements ShouldQueue
                     'apikey' => env('STM_APIKEY')
                 ]
             ]);
-            Storage::put('public/tu.pb', $response->getBody()->getContents());
+            Storage::put('public/tu.pb', (string) $response->getBody());
         }
 
         // Convert protobuf
         $feed = new FeedMessage();
-        $feed->mergeFromString($response->getBody()->getContents());
+        $feed->mergeFromString((string) $response->getBody());
 
         // Get each entity
         foreach ($feed->getEntity() as $entity) {
