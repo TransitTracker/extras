@@ -39,8 +39,8 @@ class ProcessTripUpdate implements ShouldQueue
         // Get the PB file
         $client = new Client();
         if (App::environment('local')) {
-//            $response = $client->get('https://extras.transittracker.ca/storage/tu.pb');
-            $response = $client->get('http://stm-school-industrial-catcher.test/storage/test.pb');
+            $response = $client->get('https://extras.transittracker.ca/storage/tu.pb');
+//            $response = $client->get('http://stm-school-industrial-catcher.test/storage/test.pb');
         } else {
             $response = $client->request('POST', 'https://api.stm.info/pub/od/gtfs-rt/ic/v1/tripUpdates', [
                 'headers' => [
@@ -58,7 +58,7 @@ class ProcessTripUpdate implements ShouldQueue
         foreach ($feed->getEntity() as $entity) {
             // Keep only entity with E or I
             $routeId = $entity->getTripUpdate()->getTrip()->getRouteId();
-            if (strpos($routeId, 'E') !== false or strpos($routeId, 'I') !== false) {
+            if (strpos($routeId, '68') !== false or strpos($routeId, 'I') !== false) {
                 // Search if existing trip
                 $existingTrip = Trip::where('trip_id', $entity->getId())->first();
 
