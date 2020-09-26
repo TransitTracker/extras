@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::view('/', 'welcome')->name('home');
+Route::view('/', 'trips')->name('home');
 
 Route::get('/stops', function () {
     return view('stops');

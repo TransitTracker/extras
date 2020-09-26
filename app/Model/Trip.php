@@ -29,6 +29,6 @@ class Trip extends Model
      */
     public function sight()
     {
-        return $this->belongsTo(Sight::class);
+        return $this->belongsTo(Sight::class)->withDefault();
     }
 }

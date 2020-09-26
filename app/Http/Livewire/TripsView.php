@@ -12,10 +12,9 @@ class TripsView extends Component
 
     public $selectedTrip;
     public $searchTrip;
-    public $searchType;
     public $searchRoute;
 
-    protected $updatesQueryString = ['searchTrip', 'searchType', 'searchRoute'];
+    protected $updatesQueryString = ['searchTrip', 'searchRoute'];
 
     public function selectTrip(int $id)
     {
@@ -23,11 +22,6 @@ class TripsView extends Component
     }
 
     public function updatingSearchTrip()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingSearchType()
     {
         $this->resetPage();
     }
@@ -49,10 +43,8 @@ class TripsView extends Component
         return view('livewire.trips-view', [
             'trips' => Trip::where([
                 ['trip_id', 'like', "%{$this->searchTrip}%"],
-                ['route_id', 'like', "%{$this->searchType}"],
                 ['route_id', 'like', "%{$this->searchRoute}%"],
-            ],
-            ['searchType' => $this->searchType])->paginate(15),
+            ])->paginate(30),
         ]);
     }
 }

@@ -70,7 +70,7 @@ class StopsView extends Component
                 ['is_fake', '=', true],
                 ['stop_id', 'like', "%{$this->searchId}%"],
                 ['stop_name', 'like', "%{$this->searchName}%"],
-            ])->paginate(15),
+            ])->paginate(30),
         ]);
     }
 }
