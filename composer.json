@@ -9,11 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
-        "calebporzio/sushi": "^2.0",
+        "calebporzio/sushi": "^v2.1",
+        "doctrine/dbal": "^2.11",
         "felixinx/gtfs-realtime-protobuf-php": "@dev",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "^7.1",
         "laravel-frontend-presets/tall": "^1.7",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
@@ -21,6 +22,7 @@
         "livewire/livewire": "^1.3"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.3.6",
         "fzaninotto/faker": "^1.9.1",
         "mockery/mockery": "^1.3.1",
@@ -40,12 +42,10 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
             "FelixINX\\TransitRealtime\\": "packages/felixinx/gtfs-relatime-protobuf-src/src"
-        },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
