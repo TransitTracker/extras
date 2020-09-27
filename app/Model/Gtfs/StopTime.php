@@ -6,11 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class StopTime extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'gtfs_stop_times';
 
     /**
@@ -19,7 +14,7 @@ class StopTime extends Model
      * @var array
      */
     protected $fillable = [
-        'gtfs_trip_id', 'arrival_time', 'departure_time', 'gtfs_stop_id', 'stop_sequence'
+        'trip_id', 'arrival_time', 'departure_time', 'stop_id', 'stop_sequence', 'schedule_relationship'
     ];
 
     /**
@@ -27,7 +22,7 @@ class StopTime extends Model
      */
     public function trip()
     {
-        return $this->belongsTo(Trip::class, 'gtfs_trip_id');
+        return $this->belongsTo(Trip::class, 'trip_id');
     }
 
     /**
@@ -35,6 +30,6 @@ class StopTime extends Model
      */
     public function stop()
     {
-        return $this->belongsTo(Stop::class, 'gtfs_stop_id');
+        return $this->belongsTo(Stop::class, 'stop_id');
     }
 }

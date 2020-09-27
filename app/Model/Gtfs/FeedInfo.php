@@ -9,11 +9,6 @@ class FeedInfo extends Model
 {
     use Sushi;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'gtfs_feed_info';
 
     /**

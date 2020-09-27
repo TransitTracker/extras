@@ -2,23 +2,16 @@
 
 namespace App\Model\Gtfs;
 
+use App\Model\Sight;
+use App\Model\Suggestion;
 use Illuminate\Database\Eloquent\Model;
 
 class Trip extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'gtfs_trips';
-
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
     protected $primaryKey = 'trip_id';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +19,7 @@ class Trip extends Model
      * @var array
      */
     protected $fillable = [
-        'gtfs_route_id', 'gtfs_service_id', 'trip_id', 'trip_headsign', 'direction_id', 'shape_id',
+        'route_id', 'service_id', 'trip_id', 'trip_headsign', 'direction_id', 'shape_id',
         'weelchair_accessible', 'note_fr', 'note_en'
     ];
 
@@ -35,7 +28,7 @@ class Trip extends Model
      */
     public function route()
     {
-        return $this->belongsTo(Route::class, 'gtfs_route_id');
+        return $this->belongsTo(Route::class, 'route_id');
     }
 
     /**
@@ -43,7 +36,15 @@ class Trip extends Model
      */
     public function service()
     {
-        return $this->belongsTo(Calendar::class, 'gtfs_service_id');
+        return $this->belongsTo(Calendar::class, 'service_id');
+    }
+
+    /**
+     * Get the sight that owns this trip.
+     */
+    public function sight()
+    {
+        return $this->belongsTo(Sight::class, 'trip_id')->withDefault();
     }
 
     /**
@@ -51,6 +52,14 @@ class Trip extends Model
      */
     public function stop_times()
     {
-        return $this->hasMany(StopTime::class, 'gtfs_trip_id');
+        return $this->hasMany(StopTime::class, 'trip_id');
+    }
+
+    /**
+     * Get the suggestions for the stop.
+     */
+    public function suggestions()
+    {
+        return $this->hasMany(Suggestion::class, 'trip_id');
     }
 }

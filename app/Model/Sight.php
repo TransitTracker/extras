@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Model\GTFS\Trip as StaticTrip;
 use Illuminate\Database\Eloquent\Model;
 
 class Sight extends Model
@@ -20,6 +21,6 @@ class Sight extends Model
      */
     public function trip()
     {
-        return $this->belongsTo(Trip::class);
+        return $this->belongsTo(StaticTrip::class);
     }
 }

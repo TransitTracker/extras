@@ -9,19 +9,10 @@ class Agency extends Model
 {
     use Sushi;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'gtfs_agency';
-
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
     protected $primaryKey = 'agency_id';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     /**
      * Define the static rows
@@ -43,6 +34,6 @@ class Agency extends Model
      */
     public function routes()
     {
-        return $this->hasMany(Route::class, 'gtfs_agency_id');
+        return $this->hasMany(Route::class, 'agency_id');
     }
 }

@@ -7,19 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Calendar extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'gtfs_calendar';
-
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
     protected $primaryKey = 'service_id';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -36,7 +27,7 @@ class Calendar extends Model
      */
     public function trips()
     {
-        return $this->hasMany(Trip::class, 'gtfs_service_id');
+        return $this->hasMany(Trip::class, 'service_id');
     }
 
     /**
