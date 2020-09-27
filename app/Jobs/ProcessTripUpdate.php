@@ -3,8 +3,9 @@
 namespace App\Jobs;
 
 use App\Model\Gtfs\Stop as StaticStop;
+use App\Model\Gtfs\StopTime;
+use App\Model\Gtfs\Trip;
 use App\Model\Sight;
-use App\Model\Trip;
 use FelixINX\TransitRealtime\FeedMessage;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
@@ -58,12 +59,17 @@ class ProcessTripUpdate implements ShouldQueue
         foreach ($feed->getEntity() as $entity) {
             // Keep only entity with E or I
             $routeId = $entity->getTripUpdate()->getTrip()->getRouteId();
-            if (strpos($routeId, '68') !== false or strpos($routeId, 'I') !== false) {
-                // Search if existing trip
-                $existingTrip = Trip::where('trip_id', $entity->getId())->first();
-
-                // Create an empty array
-                $stopTimeUpdates = [];
+            if (strpos($routeId, 'E') !== false or strpos($routeId, 'I') !== false) {
+                // Search if existing trip, create it if needed
+                $trip = Trip::firstOrCreate(
+                    ['trip_id' => $entity->getId()],
+                    [
+                        'gtfs_route_id' => $routeId,
+                        'trip_headsign' => 'TBD',
+                        'note_en' => $entity->getTripUpdate()->getTrip()->getStartTime(),
+                    ]
+                );
+                $trip->touch();
 
                 // Get each stop time update
                 foreach ($entity->getTripUpdate()->getStopTimeUpdate() as $item) {
@@ -98,51 +104,32 @@ class ProcessTripUpdate implements ShouldQueue
                         ]
                     );
 
-                    // Build the object and add it to stopTimeUpdates array
-                    $newUpdate = (object) [
-                        'stop_sequence' => $item->getStopSequence(),
-                        'arrival_time' => $arrivalTime,
-                        'departure_time' => $departureTime,
-                        'stop_id' => $item->getStopId(),
-                        'is_fake' => !$stop ? true : $stop->is_fake,
-                        'schedule_relationship' => $scheduleRelationship,
-                        'lat' => 0,
-                        'lon' => 0,
-                    ];
-                    $stopTimeUpdates[$item->getStopSequence()] = $newUpdate;
+                    // Create a GTFS Stop Time
+                    $stopTime = StopTime::firstOrCreate(
+                        [
+                            'trip_id' => $entity->getId(),
+                            'stop_id' => $item->getStopId(),
+                        ],
+                        [
+                            'arrival_time' => $arrivalTime,
+                            'departure_time' => $departureTime,
+                            'stop_sequence' => $item->getStopSequence(),
+                            'schedule_relationship' => $scheduleRelationship,
+                        ]
+                    );
                 }
-
-                // Compare stop time updates length (if existing trip)
-                if ($existingTrip) {
-                    if (count($existingTrip->stop_time_updates) > count($stopTimeUpdates)) {
-                        $stopTimeUpdates = $existingTrip->stop_time_updates;
-                    }
-                }
-
-                // Create or update the trip
-                $finalTrip = Trip::updateOrCreate(
-                    ['trip_id' => $entity->getId()],
-                    [
-                        'start_time' => $entity->getTripUpdate()->getTrip()->getStartTime(),
-                        'route_id' => $routeId,
-                        'stop_time_updates' => $stopTimeUpdates
-                    ]
-                );
-                $finalTrip->touch();
 
                 // Create the sight
                 $sight = Sight::updateOrCreate(
-                    ['trip_id' => $finalTrip->id],
+                    ['trip_id' => $trip->id],
                     [
                         strtolower(date('l')) => true
                     ]
                 );
-                $finalTrip->sight_id = $sight->id;
-                $finalTrip->save();
+                $trip->sight_id = $sight->id;
+                $trip->save();
             }
         }
-
-        dispatch(new ProcessVehiclePosition());
 
         // Clear the client
         $client = null;

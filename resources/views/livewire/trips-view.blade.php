@@ -1,30 +1,24 @@
 <div class="flex flex-col md:flex-row h-full">
     <div class="flex-1 md:shadow-lg bg-white mt-20 md:mt-0 h-half md:h-full">
         <div class="p-3 md:flex justify-between border-b border-gray-200 bg-white sticky top-20 md:top-16">
-            <div class="flex justify-between gap-2">
+            <div class="flex justify-between gap-2 w-full">
                 <input aria-label="Search by trip" wire:model="searchTrip" type="text"
-                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm w-full mr-2"
+                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm w-full"
                        placeholder="Search by trip id...">
                 <input aria-label="Search by route" wire:model="searchRoute" type="text"
-                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm w-full mr-2"
+                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm w-full"
                        placeholder="Search by route...">
             </div>
         </div>
         <ul class="text-sm md:text-base md:mt-16 max-h-40-screen md:max-h-full overflow-auto">
             @forelse($trips as $trip)
-                <li class="flex items-center cursor-pointer hover:bg-secondary-300 p-2 md:p-3 transition-colors duration-200 ease-in-out {{ !$selectedTrip ? '' : ($selectedTrip->id === $trip->id ? 'bg-secondary-200' : '') }}"
-                     wire:click="selectTrip({{ $trip->id }})" wire:key="{{ $trip->id }}">
+                <li class="flex items-center cursor-pointer hover:bg-secondary-300 p-2 md:p-3 transition-colors duration-200 ease-in-out {{ !$selectedTrip ? '' : ($selectedTrip->trip_id === $trip->trip_id ? 'bg-secondary-200' : '') }}"
+                     wire:click="selectTrip({{ $trip->trip_id }})" wire:key="{{ $trip->trip_id }}">
                     <p class="hover:text-gray-900 mr-2">{{ $trip->trip_id }}</p>
-                    @if(strpos($trip->route_id, 'E') !== false)
-                        <span class="px-1 md:px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">
-                          {{ $trip->route_id }}
-                        </span>
-                    @else
-                        <span class="px-1 md:px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-200 text-gray-800">
-                          {{ $trip->route_id }}
-                        </span>
-                    @endif
-                    <p class="flex-grow text-right text-sm text-gray-900">{{ \Carbon\Carbon::parse($trip->start_time)->diffForHumans() }}</p>
+                    <span class="px-1 md:px-2 inline-flex text-xs leading-5 font-semibold rounded-full @if((bool) strpos($trip->route_id, 'E')) bg-stm-green text-white @else bg-stm-yellow text-black @endif">
+                      {{ $trip->route_id }}
+                    </span>
+                    <p class="flex-grow text-right text-sm text-gray-900">{{ \Carbon\Carbon::parse($trip->note_en)->diffForHumans() }}</p>
                 </li>
             @empty
                 <div class="px-6 py-3">No trips are matching your search</div>
@@ -38,39 +32,24 @@
                 <div class="md:flex items-center mb-4">
                     <h1 class="text-xl md:text-2xl flex-grow">Trip {{ $selectedTrip->trip_id }} on {{ $selectedTrip->route_id }}</h1>
                 </div>
-                <ul class="mb-4">
-                    <li class="flex">
-                        <svg viewBox="0 0 20 20" fill="currentColor" class="clock w-4 md:w-6 h-4 md:h-6 mr-2">
-                            <path fill-rule="evenodd"
-                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                  clip-rule="evenodd"></path>
+                <ul>
+                    <li class="flex mb-2">
+                        <svg fill="currentColor" class="w-4 md:w-6 h-4 md:h-6 mr-2" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z" />
                         </svg>
-                        First seen {{ $selectedTrip->created_at }}
+                        First seen: {{ $selectedTrip->created_at }}
                     </li>
-                    <li class="flex">
-                        <svg viewBox="0 0 20 20" fill="currentColor" class="clock w-4 md:w-6 h-4 md:h-6 mr-2">
-                            <path fill-rule="evenodd"
-                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                  clip-rule="evenodd"></path>
+                    <li class="flex mb-2">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 md:w-6 h-4 md:h-6 mr-2">
+                            <path fill="currentColor" d="M18,11V12.5C21.19,12.5 23.09,16.05 21.33,18.71L20.24,17.62C21.06,15.96 19.85,14 18,14V15.5L15.75,13.25L18,11M18,22V20.5C14.81,20.5 12.91,16.95 14.67,14.29L15.76,15.38C14.94,17.04 16.15,19 18,19V17.5L20.25,19.75L18,22M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H14C13.36,20.45 12.86,19.77 12.5,19H5V8H19V10.59C19.71,10.7 20.39,10.94 21,11.31V5A2,2 0 0,0 19,3Z" />
                         </svg>
-                        Last seen {{ $selectedTrip->updated_at }}
+                        Last seen: {{ $selectedTrip->updated_at }}
                     </li>
-                    <li class="flex">
-                        <svg viewBox="0 0 20 20" fill="currentColor" class="clock w-4 md:w-6 h-4 md:h-6 mr-2">
-                            <path fill-rule="evenodd"
-                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                  clip-rule="evenodd"></path>
+                    <li class="flex mb-2">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 md:w-6 h-4 md:h-6 mr-2">
+                            <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                         </svg>
-                        Start at {{ $selectedTrip->start_time }}
-                    </li>
-                    <li class="flex">
-                        <svg class="w-4 md:w-6 h-4 md:h-6 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                  clip-rule="evenodd"></path>
-                        </svg>
-                        Seen on {{ $selectedTrip->sight->monday ? 'Monday' : '' }}
+                        Seen on: {{ $selectedTrip->sight->monday ? 'Monday' : '' }}
                         {{ $selectedTrip->sight->tuesday ? 'Tuesday' : '' }}
                         {{ $selectedTrip->sight->wednesday ? 'Wednesday' : '' }}
                         {{ $selectedTrip->sight->thursday ? 'Thursday' : '' }}
@@ -78,7 +57,92 @@
                         {{ $selectedTrip->sight->saturday ? 'Saturday' : '' }}
                         {{ $selectedTrip->sight->sunday ? 'Sunday' : '' }}
                     </li>
+                    <li class="flex mb-2">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 md:w-6 h-4 md:h-6 mr-2">
+                            <path fill="currentColor" d="M16.5,4V8.25L19.36,9.94L18.61,11.16L15,9V4H16.5M16,13C17.36,13 18.54,12.5 19.5,11.53C20.5,10.56 21,9.39 21,8C21,6.64 20.5,5.46 19.5,4.5C18.54,3.5 17.36,3 16,3C14.61,3 13.44,3.5 12.47,4.5C11.5,5.46 11,6.64 11,8C11,9.39 11.5,10.56 12.47,11.53C13.44,12.5 14.61,13 16,13M13.5,19C13.94,19 14.3,18.84 14.58,18.54C14.86,18.24 15,17.89 15,17.5C15,17.08 14.86,16.73 14.58,16.43C14.3,16.13 13.94,16 13.5,16C13.06,16 12.7,16.13 12.42,16.43C12.14,16.73 12,17.08 12,17.5C12,17.89 12.14,18.24 12.42,18.54C12.7,18.84 13.06,19 13.5,19M3,13H11.11C9.7,11.64 9,10 9,8H3V13M4.5,19C4.94,19 5.3,18.84 5.58,18.54C5.86,18.24 6,17.89 6,17.5C6,17.08 5.86,16.73 5.58,16.43C5.3,16.13 4.94,16 4.5,16C4.06,16 3.7,16.13 3.42,16.43C3.14,16.73 3,17.08 3,17.5C3,17.89 3.14,18.24 3.42,18.54C3.7,18.84 4.06,19 4.5,19M16,1C17.92,1 19.58,1.67 20.95,3.05C22.33,4.42 23,6.08 23,8C23,9.77 22.44,11.29 21.28,12.59C20.13,13.88 18.7,14.66 17,14.91V18C17,18.84 16.67,19.58 16,20.2V22C16,22.27 15.89,22.5 15.7,22.71C15.5,22.91 15.28,23 15,23H14C13.73,23 13.5,22.91 13.29,22.71C13.09,22.5 13,22.27 13,22V21H5V22C5,22.27 4.91,22.5 4.71,22.71C4.5,22.91 4.27,23 4,23H3C2.72,23 2.5,22.91 2.3,22.71C2.11,22.5 2,22.27 2,22V20.2C1.33,19.58 1,18.84 1,18V8C1,6.42 1.67,5.35 3.05,4.8C4.42,4.26 6.41,4 9,4C9.13,4 9.33,4 9.61,4C9.89,4 10.09,4.03 10.22,4.03C11.63,2 13.55,1 16,1Z" />
+                        </svg>
+                        Start time: {{ $selectedTrip->note_en }}
+                    </li>
+                    <li class="flex mb-2">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 md:w-6 h-4 md:h-6 mr-2">
+                            <path fill="currentColor" d="M11,12H3.5L6,9.5L3.5,7H11V3L12,2L13,3V7H18L20.5,9.5L18,12H13V20A2,2 0 0,1 15,22H9A2,2 0 0,1 11,20V12Z" />
+                        </svg>
+                        Headsign: {{ $selectedTrip->trip_headsign }}
+                    </li>
                 </ul>
+
+                <div class="rounded shadow my-4" x-data="{open:false}">
+                    @if($selectedTrip->trip_headsign === 'TBD')
+                        <div class="p-1 md:p-3 bg-yellow-200 flex cursor-pointer" @click="open = !open">
+                            <b class="flex-grow inline-flex">
+                                <svg class="w-6 h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M10,19H13V22H10V19M12,2C17.35,2.22 19.68,7.62 16.5,11.67C15.67,12.67 14.33,13.33 13.67,14.17C13,15 13,16 13,17H10C10,15.33 10,13.92 10.67,12.92C11.33,11.92 12.67,11.33 13.5,10.67C15.92,8.43 15.32,5.26 12,5A3,3 0 0,0 9,8H6A6,6 0 0,1 12,2Z" />
+                                </svg>
+                                No data
+                            </b>
+                            <p class="inline-flex">
+                                <svg class="w-6 h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                                </svg>
+                                Make a suggestion
+                            </p>
+                        </div>
+                    @else
+                        <div class="p-1 md:p-3 bg-green-200 flex cursor-pointer" @click="open = !open">
+                            <b class="flex-grow inline-flex">
+                                <svg class="w-4 md:w-6 h-4 md:h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M10,19H13V22H10V19M12,2C17.35,2.22 19.68,7.62 16.5,11.67C15.67,12.67 14.33,13.33 13.67,14.17C13,15 13,16 13,17H10C10,15.33 10,13.92 10.67,12.92C11.33,11.92 12.67,11.33 13.5,10.67C15.92,8.43 15.32,5.26 12,5A3,3 0 0,0 9,8H6A6,6 0 0,1 12,2Z" />
+                                </svg>
+                                Not correct?
+                            </b>
+                            <p class="inline-flex">
+                                <svg class="w-4 md:w-6 h-4 md:h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                                </svg>
+                                Make a suggestion
+                            </p>
+                        </div>
+                    @endif
+                    @if(count($selectedTrip->suggestions) > 0)
+                        <div class="p-1 md:p-3 bg-gray-100 text-sm" x-bind:style="open ? '' : 'display:none'">
+                            <b>Previous suggestions:</b>
+                            <ul>
+                                @foreach($selectedTrip->suggestions as $suggestion)
+                                    <li>{{ $suggestion->payload['trip_headsign'] }} - {{ $suggestion->payload['trip_notes'] }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <div class="p-1 md:p-3 bg-white" x-bind:style="open ? '' : 'display:none'">
+                        @if($formSuccess)
+                            <div class="flex flex-col items-center">
+                                <svg class="w-10 h-10 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                                </svg>
+                                Thanks for your suggestion!
+                            </div>
+                        @else
+                            <form wire:submit.prevent="formSubmit" class="text-sm">
+                                <input aria-label="Trip headsign (special destination or origin)" wire:model="formHeadsign" type="text" required
+                                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 w-full mb-2"
+                                       placeholder="Trip headsign (special destination or origin)">
+                                @error('formHeadsign') <p class="text-red-600 mb-2 text-sm">{{ $message }}</p> @enderror
+                                <input aria-label="Notes (e.g. source)" wire:model="formNotes" type="text" required
+                                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 w-full mb-2"
+                                       placeholder="Notes (e.g. source)">
+                                @error('formNotes') <p class="text-red-600 mb-2 text-sm">{{ $message }}</p> @enderror
+
+                                <div class="flex items-center justify-between">
+                                    <button type="submit" class="bg-secondary-500 rounded p-2 hover:bg-secondary-700 hover:text-white mr-4">
+                                        Submit
+                                    </button>
+                                    <p class="text-sm text-gray-700 italic">Submissions are anonymous, but you can add your name on <a href="https://github.com/transittracker/extras#Contributors" class="text-primary-600">this page</a>.</p>
+                                </div>
+                            </form>
+                        @endif
+                    </div>
+                </div>
+
                 <table class="rounded border-b border-gray-200 text-xs md:text-base w-full bg-gray-100">
                     <thead class="bg-gray-500 text-white">
                     <tr>
@@ -90,48 +154,49 @@
                     </tr>
                     </thead>
                     <tbody class="text-gray-700">
-                    @foreach($selectedTrip->stop_time_updates as $stop)
-                        <tr wire:key="{{ $stop['stop_id'] }}">
-                            <th scope="row">{{ $stop['stop_sequence'] }}</th>
-                            <td class="timestamp">{{ $stop['arrival_time'] }}</td>
-                            <td class="timestamp">{{ $stop['departure_time'] }}</td>
+                    @foreach($selectedTrip->stop_times as $stopTime)
+                        <tr wire:key="{{ $stopTime->stop_id }}">
+                            <th scope="row">{{ $stopTime->stop_sequence }}</th>
+                            <td>{{ $stopTime->arrival_time }}</td>
+                            <td>{{ $stopTime->departure_time }}</td>
                             <td class="inline-flex">
-                                @if(key_exists('is_fake', $stop) && $stop['is_fake'])
-                                    <svg viewBox="0 0 20 20" fill="currentColor"
-                                         class="exclamation w-4 md:w-6 h-4 md:h-6 text-red-700">
-                                        <path fill-rule="evenodd"
-                                              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                              clip-rule="evenodd"></path>
+                                @if($stopTime->stop->is_fake)
+                                    <svg class="w-4 md:w-5 h-4 md:h-5 text-red-700" fill="currentColor" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z" />
                                     </svg>
                                 @endif
-                                @if($stop['lat'] !== 0 && $stop['lon'] !== 0)
-                                    <a class="underline text-secondary-700"
-                                       href="https://www.openstreetmap.org/?mlat={{ $stop['lat'] }}&mlon={{ $stop['lon'] }}"
-                                       target="_blank">
-                                        {{ $stop['stop_id'] }}
-                                    </a>
-                                @else
-                                    {{ $stop['stop_id'] }}
-                                @endif
+                                {{ $stopTime->stop_id }}
                             </td>
-                            <td>{{ $stop['schedule_relationship'] }}</td>
+                            <td>{{ $stopTime->schedule_relationship }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
                 <ul class="mt-3">
                     <li class="inline-flex">
-                        <svg viewBox="0 0 20 20" fill="currentColor" class="exclamation w-4 md:w-6 h-4 md:h-6 text-red-700 mr-2">
-                            <path fill-rule="evenodd"
-                                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                  clip-rule="evenodd"></path>
+                        <svg class="w-4 md:w-5 h-4 md:h-5 text-red-700 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z" />
                         </svg>
                         Indicates a fake stop
                     </li>
                 </ul>
             </div>
-        @else
-            <div>There is no trips yet!</div>
+            @else
+            <div class="md:sticky md:top-32 h-full md:h-auto flex md:block items-center">
+                <div class="text-center mx-auto">
+                    <svg class="w-12 md:w-24 h-12 md:h-24 text-primary-500 mx-auto mb-2 md:mb-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M10.76,8.69A0.76,0.76 0 0,0 10,9.45V20.9C10,21.32 10.34,21.66 10.76,21.66C10.95,21.66 11.11,21.6 11.24,21.5L13.15,19.95L14.81,23.57C14.94,23.84 15.21,24 15.5,24C15.61,24 15.72,24 15.83,23.92L18.59,22.64C18.97,22.46 19.15,22 18.95,21.63L17.28,18L19.69,17.55C19.85,17.5 20,17.43 20.12,17.29C20.39,16.97 20.35,16.5 20,16.21L11.26,8.86L11.25,8.87C11.12,8.76 10.95,8.69 10.76,8.69M15,10V8H20V10H15M13.83,4.76L16.66,1.93L18.07,3.34L15.24,6.17L13.83,4.76M10,0H12V5H10V0M3.93,14.66L6.76,11.83L8.17,13.24L5.34,16.07L3.93,14.66M3.93,3.34L5.34,1.93L8.17,4.76L6.76,6.17L3.93,3.34M7,10H2V8H7V10" />
+                    </svg>
+                    <h1 class="text-primary-500 text-lg md:text-2xl">Select a trip to get started</h1>
+                </div>
+            </div>
+{{--            <div class="md:mt-24 text-center">--}}
+{{--                <svg class="w-12 md:w-24 h-12 md:h-24 text-primary-500 mx-auto mb-2 md:mb-4" fill="currentColor" viewBox="0 0 24 24">--}}
+{{--                    <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z" />--}}
+{{--                </svg>--}}
+{{--                <h1 class="text-primary-500 text-lg md:text-2xl">Come back later</h1>--}}
+{{--                <p>So far, no trips have been recorded for this board period</p>--}}
+{{--            </div>--}}
         @endif
     </div>
 </div>

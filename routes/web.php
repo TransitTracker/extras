@@ -19,14 +19,9 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::view('/', 'trips')->name('home');
-
-Route::get('/stops', function () {
-    return view('stops');
-})->name('stops');
-
-Route::get('/download', function () {
-    return view('download')->with('files', Storage::files('public/latest'));
-})->name('download');
+Route::view('/trips', 'trips')->name('trips');
+Route::view('/stops', 'stops')->name('stops');
+Route::view('/download', 'download')->name('download');
 
 Route::layout('layouts.auth')->group(function () {
     Route::middleware('guest')->group(function () {

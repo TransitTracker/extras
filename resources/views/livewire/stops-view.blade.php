@@ -1,12 +1,12 @@
 <div class="flex flex-col md:flex-row h-full">
     <div class="flex-1 md:shadow-lg bg-white mt-20 md:mt-0 h-half md:h-full">
         <div class="p-3 md:flex justify-between border-b border-gray-200 bg-white sticky top-20 md:top-16">
-            <div class="flex justify-between gap-2">
+            <div class="flex justify-between gap-2 w-full">
                 <input aria-label="Search by id" wire:model="searchId" type="text"
-                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm w-full mr-2"
+                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm w-full"
                        placeholder="Search by id...">
                 <input aria-label="Search by name" wire:model="searchName" type="text"
-                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm w-full mr-2"
+                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm w-full"
                        placeholder="Search by name...">
             </div>
         </div>
@@ -30,56 +30,48 @@
                     <h1 class="text-xl md:text-2xl flex-grow">Stop <b>{{ $selectedStop->stop_id }}</b> {{ $selectedStop->stop_name }}</h1>
                 </div>
                 @if($selectedStop->stop_lat && $selectedStop->stop_lon)
-                    <div class="w-full mb-4">
+                    <div class="w-full mb-2">
                         <iframe class="rounded shadow" width="100%" height="300" frameborder="0" scrolling="no"
                                 marginheight="0" marginwidth="0"
                                 src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=en&amp;q={{$selectedStop->stop_lat}},{{$selectedStop->stop_lon}}&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
                     </div>
                 @endif
 
-                <div class="rounded shadow">
+                <div class="rounded shadow my-4" x-data="{open:false}">
                     @if($selectedStop->stop_name === 'TBD')
-                        <div class="p-1 md:p-3 bg-yellow-200 flex">
+                        <div class="p-1 md:p-3 bg-yellow-200 flex" @click="open = !open">
                             <b class="flex-grow inline-flex">
-                                <svg class="w-6 h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 20 20"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                                          clip-rule="evenodd"></path>
+                                <svg class="w-6 h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M10,19H13V22H10V19M12,2C17.35,2.22 19.68,7.62 16.5,11.67C15.67,12.67 14.33,13.33 13.67,14.17C13,15 13,16 13,17H10C10,15.33 10,13.92 10.67,12.92C11.33,11.92 12.67,11.33 13.5,10.67C15.92,8.43 15.32,5.26 12,5A3,3 0 0,0 9,8H6A6,6 0 0,1 12,2Z" />
                                 </svg>
                                 No data
                             </b>
                             <p class="inline-flex">
-                                <svg class="w-6 h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 20 20"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                <svg class="w-6 h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
                                 </svg>
                                 Make a suggestion
                             </p>
                         </div>
                     @else
-                        <div class="p-1 md:p-3 bg-green-200 flex">
+                        <div class="p-1 md:p-3 bg-green-200 flex" @click="open = !open">
                             <b class="flex-grow inline-flex">
-                                <svg class="w-6 h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 20 20"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                                          clip-rule="evenodd"></path>
+                                <svg class="w-6 h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M10,19H13V22H10V19M12,2C17.35,2.22 19.68,7.62 16.5,11.67C15.67,12.67 14.33,13.33 13.67,14.17C13,15 13,16 13,17H10C10,15.33 10,13.92 10.67,12.92C11.33,11.92 12.67,11.33 13.5,10.67C15.92,8.43 15.32,5.26 12,5A3,3 0 0,0 9,8H6A6,6 0 0,1 12,2Z" />
                                 </svg>
-                                Can it be improved?
+                                Not correct?
                             </b>
                             <p class="inline-flex">
-                                <svg class="w-6 h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 20 20"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                <svg class="w-6 h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
                                 </svg>
                                 Make a suggestion
                             </p>
                         </div>
                     @endif
                     @if(count($selectedStop->suggestions) > 0)
-                        <div class="p-1 md:p-3 bg-gray-100 text-sm">
-                            <b>Here is some suggestions:</b>
+                        <div class="p-1 md:p-3 bg-gray-100 text-sm" x-bind:style="open ? '' : 'display:none'">
+                            <b>Previous suggestions:</b>
                             <ul>
                                 @foreach($selectedStop->suggestions as $suggestion)
                                     <li>{{ $suggestion->payload['stop_name'] }}
@@ -88,14 +80,11 @@
                             </ul>
                         </div>
                     @endif
-                    <div class="p-1 md:p-3 bg-white">
+                    <div class="p-1 md:p-3 bg-white" x-bind:style="open ? '' : 'display:none'">
                         @if($formSuccess)
                             <div class="flex flex-col items-center">
-                                <svg class="w-10 h-10 text-green-500" fill="currentColor" viewBox="0 0 20 20"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                          clip-rule="evenodd"></path>
+                                <svg class="w-10 h-10 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
                                 </svg>
                                 Thanks for your suggestion!
                             </div>
@@ -121,9 +110,34 @@
                         @endif
                     </div>
                 </div>
+                <table class="rounded border-b border-gray-200 text-xs md:text-base w-full bg-gray-100">
+                    <thead class="bg-gray-500 text-white">
+                    <tr>
+                        <th class="text-left p-1 md:p-2">Trip ID</th>
+                        <th class="text-left p-1 md:p-2">Route</th>
+                        <th class="text-left p-1 md:p-2">Headsign</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                    @foreach($selectedStop->trips() as $trip)
+                        <tr wire:key="{{ $trip->trip_id }}">
+                            <th scope="row">{{ $trip->trip_id }}</th>
+                            <td>{{ $trip->route_id }}</td>
+                            <td>{{ $trip->trip_headsign }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         @else
-            <div>There is no stops yet!</div>
+            <div class="md:sticky md:top-32 h-full md:h-auto flex md:block items-center">
+                <div class="text-center mx-auto">
+                    <svg class="w-12 md:w-24 h-12 md:h-24 text-primary-500 mx-auto mb-2 md:mb-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M10.76,8.69A0.76,0.76 0 0,0 10,9.45V20.9C10,21.32 10.34,21.66 10.76,21.66C10.95,21.66 11.11,21.6 11.24,21.5L13.15,19.95L14.81,23.57C14.94,23.84 15.21,24 15.5,24C15.61,24 15.72,24 15.83,23.92L18.59,22.64C18.97,22.46 19.15,22 18.95,21.63L17.28,18L19.69,17.55C19.85,17.5 20,17.43 20.12,17.29C20.39,16.97 20.35,16.5 20,16.21L11.26,8.86L11.25,8.87C11.12,8.76 10.95,8.69 10.76,8.69M15,10V8H20V10H15M13.83,4.76L16.66,1.93L18.07,3.34L15.24,6.17L13.83,4.76M10,0H12V5H10V0M3.93,14.66L6.76,11.83L8.17,13.24L5.34,16.07L3.93,14.66M3.93,3.34L5.34,1.93L8.17,4.76L6.76,6.17L3.93,3.34M7,10H2V8H7V10" />
+                    </svg>
+                    <h1 class="text-primary-500 text-lg md:text-2xl">Select a stop to get started</h1>
+                </div>
+            </div>
         @endif
     </div>
 </div>

@@ -28,7 +28,11 @@ module.exports = {
                     700: '#258378',
                     800: '#18534c',
                     900: '#0b2824'
-                }
+                },
+                stm: {
+                    green: '#3b9b74',
+                    yellow: '#f7e200',
+                },
             },
         },
         inset: {
@@ -36,6 +40,7 @@ module.exports = {
             16: '4rem',
             20: '5rem',
             24: '6rem',
+            32: '8rem',
         },
         maxHeight: {
             'full': '100%',

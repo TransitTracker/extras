@@ -58,7 +58,6 @@ class StopsView extends Component
 
     public function mount()
     {
-        $this->selectedStop = Stop::firstWhere('is_fake', true);
         $this->searchId = request()->query('searchId', $this->searchId);
         $this->searchName = request()->query('searchName', $this->searchName);
     }
