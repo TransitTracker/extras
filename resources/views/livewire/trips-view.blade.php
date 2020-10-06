@@ -91,9 +91,9 @@
                         <div class="p-1 md:p-3 bg-green-200 flex cursor-pointer" @click="open = !open">
                             <b class="flex-grow inline-flex">
                                 <svg class="w-4 md:w-6 h-4 md:h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="M10,19H13V22H10V19M12,2C17.35,2.22 19.68,7.62 16.5,11.67C15.67,12.67 14.33,13.33 13.67,14.17C13,15 13,16 13,17H10C10,15.33 10,13.92 10.67,12.92C11.33,11.92 12.67,11.33 13.5,10.67C15.92,8.43 15.32,5.26 12,5A3,3 0 0,0 9,8H6A6,6 0 0,1 12,2Z" />
+                                    <path fill="currentColor" d="M4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2M12.19,5.5C11.3,5.5 10.59,5.68 10.05,6.04C9.5,6.4 9.22,7 9.27,7.69H11.24C11.24,7.41 11.34,7.2 11.5,7.06C11.7,6.92 11.92,6.85 12.19,6.85C12.5,6.85 12.77,6.93 12.95,7.11C13.13,7.28 13.22,7.5 13.22,7.8C13.22,8.08 13.14,8.33 13,8.54C12.83,8.76 12.62,8.94 12.36,9.08C11.84,9.4 11.5,9.68 11.29,9.92C11.1,10.16 11,10.5 11,11H13C13,10.72 13.05,10.5 13.14,10.32C13.23,10.15 13.4,10 13.66,9.85C14.12,9.64 14.5,9.36 14.79,9C15.08,8.63 15.23,8.24 15.23,7.8C15.23,7.1 14.96,6.54 14.42,6.12C13.88,5.71 13.13,5.5 12.19,5.5M11,12V14H13V12H11Z" />
                                 </svg>
-                                Not correct?
+                                Incorrect?
                             </b>
                             <p class="inline-flex">
                                 <svg class="w-4 md:w-6 h-4 md:h-6 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -131,12 +131,16 @@
                                        class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 w-full mb-2"
                                        placeholder="Notes (e.g. source)">
                                 @error('formNotes') <p class="text-red-600 mb-2 text-sm">{{ $message }}</p> @enderror
+                                <input aria-label="Your username" wire:model="formUsername" type="text"
+                                       class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 w-full mb-2"
+                                       placeholder="Your username">
+                                @error('formUsername') <p class="text-red-600 mb-2 text-sm">{{ $message }}</p> @enderror
 
                                 <div class="flex items-center justify-between">
                                     <button type="submit" class="bg-secondary-500 rounded p-2 hover:bg-secondary-700 hover:text-white mr-4">
                                         Submit
                                     </button>
-                                    <p class="text-sm text-gray-700 italic">Submissions are anonymous, but you can add your name on <a href="https://github.com/transittracker/extras#Contributors" class="text-primary-600">this page</a>.</p>
+                                    <p class="text-sm text-gray-700 italic">If the username field is filled, you will be credited on <a href="https://github.com/transittracker/extras#Contributors" class="text-primary-600">this page</a>.</p>
                                 </div>
                             </form>
                         @endif

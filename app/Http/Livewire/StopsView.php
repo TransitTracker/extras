@@ -17,6 +17,7 @@ class StopsView extends Component
     public $formName;
     public $formLocation;
     public $formRealStop;
+    public $formUsername;
     public $formSuccess = false;
 
     protected $queryString = ['searchId', 'searchName'];
@@ -39,7 +40,8 @@ class StopsView extends Component
                 'stop_name' => $this->formName,
                 'stop_location' => $this->formLocation,
                 'real_stop' => $this->formRealStop,
-            ]
+                'username' => $this->formUsername,
+            ],
         ]);
 
         $this->formSuccess = true;

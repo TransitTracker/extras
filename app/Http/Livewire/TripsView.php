@@ -16,6 +16,7 @@ class TripsView extends Component
     public $searchRoute;
     public $formHeadsign;
     public $formNotes;
+    public $formUsername;
     public $formSuccess = false;
 
     protected $queryString = ['searchTrip', 'searchRoute'];
@@ -23,6 +24,7 @@ class TripsView extends Component
     public function selectTrip(int $id)
     {
         $this->selectedTrip = Trip::find($id);
+        $this->formSuccess = false;
     }
 
     public function formSubmit()
@@ -36,6 +38,7 @@ class TripsView extends Component
             'payload' => [
                 'trip_headsign' => $this->formHeadsign,
                 'trip_notes' => $this->formNotes,
+                'username' => $this->formUsername,
             ],
         ]);
 
