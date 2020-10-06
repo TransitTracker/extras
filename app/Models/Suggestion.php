@@ -27,18 +27,10 @@ class Suggestion extends Model
     ];
 
     /**
-     * Get the stop that owns this suggestion.
+     * Get the stop or trip that belong to this suggestion.
      */
-    public function stop()
+    public function suggestible()
     {
-        return $this->belongsTo(StaticStop::class);
-    }
-
-    /**
-     * Get the trip that owns this sight.
-     */
-    public function trip()
-    {
-        return $this->belongsTo(StaticTrip::class);
+        return $this->morphTo();
     }
 }

@@ -32,7 +32,7 @@ class TripsView extends Component
             'formNotes' => 'required',
         ]);
 
-        $this->selectedTrip->suggestion()->create([
+        $this->selectedTrip->suggestions()->create([
             'payload' => [
                 'trip_headsign' => $this->formHeadsign,
                 'trip_notes' => $this->formNotes,

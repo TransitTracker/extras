@@ -60,6 +60,6 @@ class Trip extends Model
      */
     public function suggestions()
     {
-        return $this->hasMany(Suggestion::class, 'trip_id');
+        return $this->morphMany(Suggestion::class, 'suggestible');
     }
 }

@@ -35,7 +35,7 @@ class Stop extends Model
      */
     public function suggestions()
     {
-        return $this->hasMany(Suggestion::class, 'stop_id');
+        return $this->morphMany(Suggestion::class, 'suggestible');
     }
 
     /**

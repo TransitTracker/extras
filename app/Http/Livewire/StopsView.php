@@ -34,8 +34,7 @@ class StopsView extends Component
             'formRealStop' => 'nullable|numeric'
         ]);
 
-        Suggestion::create([
-            'stop_id' => $this->selectedStop->stop_id,
+        $this->selectedStop->suggestions()->create([
             'payload' => [
                 'stop_name' => $this->formName,
                 'stop_location' => $this->formLocation,
