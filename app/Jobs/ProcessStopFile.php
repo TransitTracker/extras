@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Model\Gtfs\Stop;
+use App\Models\Gtfs\Stop;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

@@ -2,11 +2,21 @@
 
 namespace App\Jobs;
 
+use App\Models\Gtfs\Agency;
+use App\Models\Gtfs\Calendar;
+use App\Models\Gtfs\FeedInfo;
+use App\Models\Gtfs\Route;
+use App\Models\Gtfs\Stop;
+use App\Models\Gtfs\StopTime;
+use App\Models\Gtfs\Trip;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
+use League\Csv\Writer;
+use ZipArchive;
 
 class GenerateCsvFiles implements ShouldQueue
 {

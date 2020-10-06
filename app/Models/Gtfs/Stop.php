@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model\Gtfs;
+namespace App\Models\Gtfs;
 
-use App\Model\Suggestion;
+use App\Models\Suggestion;
 use Illuminate\Database\Eloquent\Model;
 
 class Stop extends Model
@@ -46,6 +46,4 @@ class Stop extends Model
         $tripIds = StopTime::where('stop_id', $this->stop_id)->select('trip_id')->get();
         return Trip::whereIn('trip_id', $tripIds)->get();
     }
-
-
 }

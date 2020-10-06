@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Gtfs;
+namespace App\Models\Gtfs;
 
 use Illuminate\Database\Eloquent\Model;
 use Sushi\Sushi;

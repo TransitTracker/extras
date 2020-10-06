@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Model\Gtfs;
+namespace App\Models\Gtfs;
 
-use App\Model\Sight;
-use App\Model\Suggestion;
+use App\Models\Sight;
+use App\Models\Suggestion;
 use Illuminate\Database\Eloquent\Model;
 
 class Trip extends Model

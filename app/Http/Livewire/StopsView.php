@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Model\Gtfs\Stop;
-use App\Model\Suggestion;
+use App\Models\Gtfs\Stop;
+use App\Models\Suggestion;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,7 +19,7 @@ class StopsView extends Component
     public $formRealStop;
     public $formSuccess = false;
 
-    protected $updatesQueryString = ['searchId', 'searchName'];
+    protected $queryString = ['searchId', 'searchName'];
 
     public function selectStop(int $stopId)
     {
@@ -54,12 +54,6 @@ class StopsView extends Component
     public function updatingSearchName()
     {
         $this->resetPage();
-    }
-
-    public function mount()
-    {
-        $this->searchId = request()->query('searchId', $this->searchId);
-        $this->searchName = request()->query('searchName', $this->searchName);
     }
 
     public function render()

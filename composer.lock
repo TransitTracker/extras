@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "89a485cbfb253305287d9e4567cf3584",
+    "content-hash": "c29f3537dd504c2d794975353bc98529",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1251,72 +1251,6 @@
             "time": "2019-07-01T23:21:34+00:00"
         },
         {
-            "name": "laravel-frontend-presets/tall",
-            "version": "v1.7.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel-frontend-presets/tall.git",
-                "reference": "47d8c00aad78ab69b756e3fd8fcf3fcfe15a8d49"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel-frontend-presets/tall/zipball/47d8c00aad78ab69b756e3fd8fcf3fcfe15a8d49",
-                "reference": "47d8c00aad78ab69b756e3fd8fcf3fcfe15a8d49",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/ui": "^2.0",
-                "php": "^7.2.5"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "LaravelFrontendPresets\\Tall\\TallServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "LaravelFrontendPresets\\Tall\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dan Harrin",
-                    "email": "Dan@DanHarrin.com"
-                },
-                {
-                    "name": "Liam Hammett",
-                    "email": "liam@liamhammett.com"
-                },
-                {
-                    "name": "Ryan Chandler",
-                    "email": "41837763+ryangjchandler@users.noreply.github.com"
-                }
-            ],
-            "description": "TALL preset for Laravel.",
-            "keywords": [
-                "alpine",
-                "alpinejs",
-                "laravel",
-                "livewire",
-                "preset",
-                "tailwind",
-                "tailwindcss",
-                "tailwindui",
-                "tall"
-            ],
-            "time": "2020-07-21T10:45:52+00:00"
-        },
-        {
             "name": "laravel/framework",
             "version": "v8.6.0",
             "source": {
@@ -1542,61 +1476,6 @@
                 "psysh"
             ],
             "time": "2020-08-11T19:28:08+00:00"
-        },
-        {
-            "name": "laravel/ui",
-            "version": "v2.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/ui.git",
-                "reference": "2ccaa3b821ea8ac7e05393b946d0578bdb46099b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/ui/zipball/2ccaa3b821ea8ac7e05393b946d0578bdb46099b",
-                "reference": "2ccaa3b821ea8ac7e05393b946d0578bdb46099b",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/console": "^7.0|^8.0",
-                "illuminate/filesystem": "^7.0|^8.0",
-                "illuminate/support": "^7.0|^8.0",
-                "php": "^7.2.5"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^8.0|^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Laravel\\Ui\\UiServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laravel\\Ui\\": "src/",
-                    "Illuminate\\Foundation\\Auth\\": "auth-backend/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "Laravel UI utilities and presets.",
-            "keywords": [
-                "laravel",
-                "ui"
-            ],
-            "time": "2020-09-09T12:07:59+00:00"
         },
         {
             "name": "league/commonmark",
@@ -1915,30 +1794,32 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v1.3.5",
+            "version": "v2.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "b1673ff9fc78a3296ca4a3b0d1ca26da0a5cdf82"
+                "reference": "c01b331e7fcbccdffd63e49ce86c05a50fcb68ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/b1673ff9fc78a3296ca4a3b0d1ca26da0a5cdf82",
-                "reference": "b1673ff9fc78a3296ca4a3b0d1ca26da0a5cdf82",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/c01b331e7fcbccdffd63e49ce86c05a50fcb68ea",
+                "reference": "c01b331e7fcbccdffd63e49ce86c05a50fcb68ea",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
-                "illuminate/support": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
-                "illuminate/validation": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
-                "php": "^7.1.3",
-                "symfony/http-kernel": "^4.0|^5.0"
+                "illuminate/database": "^7.0|^8.0",
+                "illuminate/support": "^7.0|^8.0",
+                "illuminate/validation": "^7.0|^8.0",
+                "php": "^7.2.5",
+                "symfony/http-kernel": "^5.0"
             },
             "require-dev": {
-                "laravel/framework": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0",
+                "calebporzio/sushi": "^2.1",
+                "laravel/framework": "^7.0|^8.0",
                 "mockery/mockery": "^1.3.1",
-                "orchestra/testbench": "~3.6.0|~3.7.0|~3.8.0|^4.0|^5.0",
-                "phpunit/phpunit": "^7.5.15|^8.4|^9.0",
+                "orchestra/testbench": "^5.0|^6.0",
+                "orchestra/testbench-dusk": "^5.2|^6.0",
+                "phpunit/phpunit": "^8.4|^9.0",
                 "psy/psysh": "@stable"
             },
             "type": "library",
@@ -1974,7 +1855,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-17T04:38:16+00:00"
+            "time": "2020-09-30T16:19:54+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5960,6 +5841,127 @@
                 "test"
             ],
             "time": "2020-07-09T08:09:16+00:00"
+        },
+        {
+            "name": "laravel-frontend-presets/tall",
+            "version": "v1.7.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-frontend-presets/tall.git",
+                "reference": "47d8c00aad78ab69b756e3fd8fcf3fcfe15a8d49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-frontend-presets/tall/zipball/47d8c00aad78ab69b756e3fd8fcf3fcfe15a8d49",
+                "reference": "47d8c00aad78ab69b756e3fd8fcf3fcfe15a8d49",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/ui": "^2.0",
+                "php": "^7.2.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelFrontendPresets\\Tall\\TallServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelFrontendPresets\\Tall\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dan Harrin",
+                    "email": "Dan@DanHarrin.com"
+                },
+                {
+                    "name": "Liam Hammett",
+                    "email": "liam@liamhammett.com"
+                },
+                {
+                    "name": "Ryan Chandler",
+                    "email": "41837763+ryangjchandler@users.noreply.github.com"
+                }
+            ],
+            "description": "TALL preset for Laravel.",
+            "keywords": [
+                "alpine",
+                "alpinejs",
+                "laravel",
+                "livewire",
+                "preset",
+                "tailwind",
+                "tailwindcss",
+                "tailwindui",
+                "tall"
+            ],
+            "time": "2020-07-21T10:45:52+00:00"
+        },
+        {
+            "name": "laravel/ui",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/ui.git",
+                "reference": "2ccaa3b821ea8ac7e05393b946d0578bdb46099b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/2ccaa3b821ea8ac7e05393b946d0578bdb46099b",
+                "reference": "2ccaa3b821ea8ac7e05393b946d0578bdb46099b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^7.0|^8.0",
+                "illuminate/filesystem": "^7.0|^8.0",
+                "illuminate/support": "^7.0|^8.0",
+                "php": "^7.2.5"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Ui\\UiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Ui\\": "src/",
+                    "Illuminate\\Foundation\\Auth\\": "auth-backend/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel UI utilities and presets.",
+            "keywords": [
+                "laravel",
+                "ui"
+            ],
+            "time": "2020-09-09T12:07:59+00:00"
         },
         {
             "name": "maximebf/debugbar",

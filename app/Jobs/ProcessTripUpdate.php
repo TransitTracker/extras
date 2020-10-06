@@ -2,10 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Model\Gtfs\Stop as StaticStop;
-use App\Model\Gtfs\StopTime;
-use App\Model\Gtfs\Trip;
-use App\Model\Sight;
+use App\Models\Gtfs\Stop as StaticStop;
+use App\Models\Gtfs\StopTime;
+use App\Models\Gtfs\Trip;
+use App\Models\Sight;
 use FelixINX\TransitRealtime\FeedMessage;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;

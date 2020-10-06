@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Model\Gtfs\Trip;
-use App\Model\Suggestion;
+use App\Models\Gtfs\Trip;
+use App\Models\Suggestion;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -18,7 +18,7 @@ class TripsView extends Component
     public $formNotes;
     public $formSuccess = false;
 
-    protected $updatesQueryString = ['searchTrip', 'searchRoute'];
+    protected $queryString = ['searchTrip', 'searchRoute'];
 
     public function selectTrip(int $id)
     {
@@ -32,8 +32,7 @@ class TripsView extends Component
             'formNotes' => 'required',
         ]);
 
-        Suggestion::create([
-            'trip_id' => $this->selectedTrip->trip_id,
+        $this->selectedTrip->suggestion()->create([
             'payload' => [
                 'trip_headsign' => $this->formHeadsign,
                 'trip_notes' => $this->formNotes,
@@ -51,12 +50,6 @@ class TripsView extends Component
     public function updatingSearchRoute()
     {
         $this->resetPage();
-    }
-
-    public function mount()
-    {
-        $this->searchTrip = request()->query('searchTrip', $this->searchTrip);
-        $this->searchRoute = request()->query('searchRoute', $this->searchRoute);
     }
 
     public function render()

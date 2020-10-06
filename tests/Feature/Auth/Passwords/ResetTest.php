@@ -19,7 +19,7 @@ class ResetTest extends TestCase
     /** @test */
     public function can_view_password_reset_page()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $token = Str::random(16);
 
@@ -40,7 +40,7 @@ class ResetTest extends TestCase
     /** @test */
     public function can_reset_password()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $token = Str::random(16);
 

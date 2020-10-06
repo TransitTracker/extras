@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Model\Gtfs\Calendar;
-use App\Model\Gtfs\Route;
-use App\Model\Gtfs\StopTime;
-use App\Model\Gtfs\Trip as StaticTrip;
-use App\Model\Sight;
-use App\Model\Trip;
+use App\Models\Gtfs\Calendar;
+use App\Models\Gtfs\Route;
+use App\Models\Gtfs\StopTime;
+use App\Models\Gtfs\Trip as StaticTrip;
+use App\Models\Sight;
+use App\Models\Trip;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 

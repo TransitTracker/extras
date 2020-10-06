@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Model\Gtfs;
+namespace App\Models\Gtfs;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Sushi\Sushi;
 
@@ -19,8 +20,19 @@ class FeedInfo extends Model
             'feed_publisher_name' => '@austinhuang0131 and @felixinx',
             'feed_publisher_url' => 'https://stm.austinhuang.me/',
             'feed_lang' => 'fr',
-            'feed_start_date' => '20200323',
-            'feed_end_date' => '20200531'
+            'feed_start_date' => '2020-03-23',
+            'feed_end_date' => '2020-05-31'
         ]
     ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Ymd');
+    }
 }

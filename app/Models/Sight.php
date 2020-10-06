@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
-use App\Model\GTFS\Trip as StaticTrip;
+use App\Models\GTFS\Trip as StaticTrip;
 use Illuminate\Database\Eloquent\Model;
 
 class Sight extends Model

@@ -3,13 +3,13 @@
 namespace App\Jobs;
 
 use Carbon\Carbon;
-use App\Model\Trip as RealtimeTrip;
-use App\Model\GTFS\Trip as StaticTrip;
-use App\Model\GTFS\Stop as StaticStop;
-use App\Model\GTFS\Route as StaticRoute;
-use App\Model\GTFS\Calendar as StaticCalendar;
-use App\Model\GTFS\Agency as StaticAgency;
-use App\Model\GTFS\StopTime as StaticStopTime;
+use App\Models\Trip as RealtimeTrip;
+use App\Models\GTFS\Trip as StaticTrip;
+use App\Models\GTFS\Stop as StaticStop;
+use App\Models\GTFS\Route as StaticRoute;
+use App\Models\GTFS\Calendar as StaticCalendar;
+use App\Models\GTFS\Agency as StaticAgency;
+use App\Models\GTFS\StopTime as StaticStopTime;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

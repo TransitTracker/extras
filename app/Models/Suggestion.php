@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
-use App\Model\Gtfs\Stop as StaticStop;
-use App\Model\Gtfs\Trip as StaticTrip;
+use App\Models\Gtfs\Stop as StaticStop;
+use App\Models\Gtfs\Trip as StaticTrip;
 use Illuminate\Database\Eloquent\Model;
 
 class Suggestion extends Model
