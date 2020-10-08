@@ -3,11 +3,11 @@
 @section('body')
     <div class="flex flex-col h-screen">
         <div class="w-full h-20 md:h-16 bg-primary-500 fixed p-2 md:p-3 text-center md:text-left md:flex md:items-center md:justify-between">
-            <h1 class="font-bold text-lg md:text-2xl text-white">Extras Catcher</h1>
+            <a href="{{ route('home') }}" class="font-bold text-lg md:text-2xl text-white">Extras Catcher</a>
             <div class="mt-2 mb-1 md:my-0">
                 <a href="{{ route('trips') }}" class="px-2 py-1 md:py-2 hover:bg-primary-600 text-white rounded {{ request()->routeIs('trips') ? 'bg-primary-700' : '' }}">Trips</a>
                 <a href="{{ route('stops') }}" class="px-2 py-1 md:py-2 hover:bg-primary-600 text-white rounded {{ request()->routeIs('stops') ? 'bg-primary-700' : '' }}">Stops</a>
-                <a href="{{ route('download') }}" class="px-2 py-1 md:py-2 hover:bg-primary-600 text-white rounded {{ request()->routeIs('download') ? 'bg-primary-700' : '' }}">Download</a>
+                <a href="{{ route('downloads') }}" class="px-2 py-1 md:py-2 hover:bg-primary-600 text-white rounded {{ request()->routeIs('downloads') ? 'bg-primary-700' : '' }}">Downloads</a>
             </div>
         </div>
         <div class="flex-grow w-full">

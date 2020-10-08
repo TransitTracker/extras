@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'trips')->name('home');
+Route::view('/', 'home')->name('home');
 Route::get('/trips', \App\Http\Livewire\TripsView::class)->name('trips');
 Route::get('/stops', \App\Http\Livewire\StopsView::class)->name('stops');
-Route::view('/download', 'download')->name('download');
+Route::get('/downloads', \App\Http\Livewire\DownloadsList::class)->name('downloads');
 
 Route::middleware('guest')->group(function () {
     Route::get('login', \App\Http\Livewire\Auth\Login::class)
