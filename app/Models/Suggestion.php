@@ -14,7 +14,7 @@ class Suggestion extends Model
      * @var array
      */
     protected $fillable = [
-        'stop_id', 'trip_id', 'payload',
+        'suggestible_id', 'suggestible_type', 'payload',
     ];
 
     /**
