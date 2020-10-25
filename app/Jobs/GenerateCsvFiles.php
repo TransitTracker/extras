@@ -40,18 +40,17 @@ class GenerateCsvFiles implements ShouldQueue
     public function handle()
     {
         // Global variables
-        $folder = 'public/' . date('Ymd');
-        $nothing = '';
+        $folder = 'public/archive/' . date('Ymd');
 
         // Create directory structure
         Storage::makeDirectory($folder);
-        Storage::put($folder . '/agency.txt', $nothing);
-        Storage::put($folder . '/calendar.txt', $nothing);
-        Storage::put($folder . '/feed_info.txt', $nothing);
-        Storage::put($folder . '/routes.txt', $nothing);
-        Storage::put($folder . '/stop_times.txt', $nothing);
-        Storage::put($folder . '/stops.txt', $nothing);
-        Storage::put($folder . '/trips.txt', $nothing);
+        Storage::put($folder . '/agency.txt', '');
+        Storage::put($folder . '/calendar.txt', '');
+        Storage::put($folder . '/feed_info.txt', '');
+        Storage::put($folder . '/routes.txt', '');
+        Storage::put($folder . '/stop_times.txt', '');
+        Storage::put($folder . '/stops.txt', '');
+        Storage::put($folder . '/trips.txt', '');
 
         // agency.txt
         $agencyColumns = [
@@ -172,6 +171,9 @@ class GenerateCsvFiles implements ShouldQueue
 
             $zip->close();
         }
+        
+        // Create symlink to latest folder
+        symlink(storage_path("app/{$folder}"), storage_path('app/public/latest'));
 
         // Clean all writers
         $agencyWriter = null;

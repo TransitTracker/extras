@@ -21,6 +21,6 @@ class DownloadsList extends Component
 
     public function mount()
     {
-        $this->directories = Storage::directories('public/gtfs');
+        $this->directories = Storage::directories('public/archive');
     }
 }

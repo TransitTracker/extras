@@ -29,9 +29,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new ProcessTripUpdate())->everyFiveMinutes();
-//        $schedule->job(new GenerateStaticGtfs())->dailyAt('00:10');
         $schedule->job(new ProcessStopFile(env('STOP_FILE_URL')))->dailyAt('01:10');
-//        $schedule->job(new GenerateCsvFiles())->dailyAt('02:10');
+        $schedule->job(new GenerateCsvFiles())->dailyAt('02:10');
     }
 
     /**
