@@ -1,61 +1,143 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
 
+
+
+<!-- PROJECT LOGO -->
+<br />
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+  <a href="https://github.com/transittracker/extras">
+    <img src="https://raw.githubusercontent.com/FelixINX/transit-tracker/master/public/svg/logo.svg" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">Transit Tracker <b>Extras Catcher</b> </h3>
+
+  <p align="center">
+    A collaborative platform to create a complete static GTFS set of the STM network, including school and industrial trips. Made possible with the help of many <a href="#contributors">contributors</a>.
+    <br />
+    <a href="https://extras.transittracker.ca"><strong>Launch the app »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/transittracker/extras/issues">Report Bug or Request Feature</a>
+  </p>
 </p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<!-- ACKNOWLEDGEMENTS -->
+## Acknowledgements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project would not be possible without the contributions of: [@austinhuang0131](https://github.com/austinhuang0131)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+<!-- TABLE OF CONTENTS -->
+## Table of Contents
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+* [Usage](#usage)
+* [Contributing](#contributing)
+* [License](#license)
+* [Contact](#contact)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+<!-- ABOUT THE PROJECT -->
+## Built With
 
-### Premium Partners
+* [Tailwind](https://github.com/tailwindlabs/tailwindcss)
+* [Alpine.js](https://github.com/alpinejs/alpine)
+* [Laravel](https://github.com/laravel/laravel)
+* [Livewire](https://github.com/livewire/livewire)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
 
+<!-- GETTING STARTED -->
+## Getting Started
+
+To get a local copy up and running follow these simple steps.
+
+
+### Prerequisites
+
+You will have to install the following software on your machine.
+* PHP 
+* NodeJS and Yarn
+* Composer
+
+
+### Installation
+ 
+1. Clone the repo
+```sh
+git clone https://github.com/transittracker/extras.git
+``` 
+2. Edit the environment variables
+3. Install Composer dependencies
+```sh
+composer install
+```
+4. Install npm packages
+```sh
+yarn install
+```
+5. Generate the front-end UI
+```sh
+yarn dev
+```
+5. Migrate the database
+```sh
+php artisan migrate
+```
+6. Start the queue
+```sh
+php artisan queue:work
+```
+
+<!-- CONTRIBUTING -->
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-## Code of Conduct
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
+<!-- LICENSE -->
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Distributed under the MIT License. See `LICENSE` for more information.
+
+
+<!-- CONTACT -->
+## Contact
+
+Félix Desjardins - [@felixinx](https://twitter.com/felixinx)
+
+Project Link: [https://extras.transittracker.ca](https://extras.transittracker.ca)
+
+Twitter: [https://twitter.com/ttrackerca](https://twitter.com/ttrackerca)
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[forks-shield]: https://img.shields.io/github/forks/transittracker/extras.svg?style=flat-square
+[forks-url]: https://github.com/transittracker/extras/network/members
+[stars-shield]: https://img.shields.io/github/stars/transittracker/extras.svg?style=flat-square
+[stars-url]: https://github.com/transittracker/extras/stargazers
+[issues-shield]: https://img.shields.io/github/issues/transittracker/extras.svg?style=flat-square
+[issues-url]: https://github.com/transittracker/extras/issues
+[license-shield]: https://img.shields.io/github/license/transittracker/extras.svg?style=flat-square
+[license-url]: https://github.com/transittracker/extras/blob/master/LICENSE.txt
