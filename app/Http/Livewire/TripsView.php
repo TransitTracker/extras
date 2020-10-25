@@ -22,7 +22,12 @@ class TripsView extends Component
 
     public function selectTrip(int $id)
     {
-        $this->selectedTrip = Trip::find($id);
+        $this->selectedTrip = Trip::where('trip_id', $id)->with([
+            'stop_times' => function ($query) {
+                $query->orderBy('stop_sequence', 'asc');
+            },
+            'stop_times.stop'
+        ])->first();
         $this->formSuccess = false;
     }
 
@@ -65,9 +70,7 @@ class TripsView extends Component
             'trips' => Trip::where([
                 ['trip_id', 'like', "%{$this->searchTrip}%"],
                 ['route_id', 'like', "%{$this->searchRoute}%"],
-            ])->with(['stop_times' => function ($query) {
-                $query->orderBy('stop_sequence', 'desc');
-            }])->paginate(30),
+            ])->paginate(30),
         ]);
     }
 }
