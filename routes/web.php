@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
 Route::get('/trips', \App\Http\Livewire\TripsView::class)->name('trips');
+Route::get('/trips/{id}', \App\Http\Livewire\TripsView::class)->name('trips.show');
 Route::get('/stops', \App\Http\Livewire\StopsView::class)->name('stops');
+Route::get('/stops/{id}', \App\Http\Livewire\StopsView::class)->name('stops.show');
 Route::get('/downloads', \App\Http\Livewire\DownloadsList::class)->name('downloads');
 
 Route::middleware('guest')->group(function () {

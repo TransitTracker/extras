@@ -128,7 +128,9 @@
                     <tbody class="text-gray-700">
                     @foreach($selectedStop->trips() as $trip)
                         <tr wire:key="{{ $trip->trip_id }}">
-                            <th scope="row">{{ $trip->trip_id }}</th>
+                            <th scope="row">
+                                <a href="{{ route('trips.show', $trip->trip_id) }}" class="underline">{{ $trip->trip_id }}</a>
+                            </th>
                             <td>{{ $trip->route_id }}</td>
                             <td>{{ $trip->trip_headsign }}</td>
                         </tr>

@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Gtfs\Trip;
-use App\Models\Suggestion;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -53,6 +52,11 @@ class TripsView extends Component
     public function updatingSearchRoute()
     {
         $this->resetPage();
+    }
+
+    public function mount($id = null)
+    {
+        if ($id) { $this->selectTrip($id); }
     }
 
     public function render()
