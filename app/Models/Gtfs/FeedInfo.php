@@ -17,8 +17,8 @@ class FeedInfo extends Model
      */
     protected $rows = [
         [
-            'feed_publisher_name' => '@austinhuang0131 and @felixinx',
-            'feed_publisher_url' => 'https://stm.austinhuang.me/',
+            'feed_publisher_name' => 'Contributors from Extras Catcher',
+            'feed_publisher_url' => 'https://extras.transittracker.ca/',
             'feed_lang' => 'fr',
             'feed_start_date' => '2020-03-23',
             'feed_end_date' => '2020-05-31'
