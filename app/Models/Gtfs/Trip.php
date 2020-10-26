@@ -20,7 +20,7 @@ class Trip extends Model
      */
     protected $fillable = [
         'route_id', 'service_id', 'trip_id', 'trip_headsign', 'direction_id', 'shape_id',
-        'weelchair_accessible', 'note_fr', 'note_en'
+        'wheelchair_accessible', 'note_fr', 'note_en'
     ];
 
     /**
