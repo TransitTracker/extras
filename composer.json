@@ -10,13 +10,14 @@
     "require": {
         "php": "^7.3",
         "calebporzio/sushi": "^v2.1",
-        "doctrine/dbal": "^2.11",
+        "doctrine/dbal": "^2.12",
         "felixinx/gtfs-realtime-protobuf-php": "@dev",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
+        "larsklopstra/nebula": "^0.4",
         "league/csv": "^9.6",
         "livewire/livewire": "^2.0"
     },
