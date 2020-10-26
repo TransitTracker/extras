@@ -23,7 +23,7 @@
   <h3 align="center">Transit Tracker <b>Extras Catcher</b> </h3>
 
   <p align="center">
-    A collaborative platform to create a complete static GTFS set of the STM network, including school and industrial trips. Made possible with the help of many <a href="#contributors">contributors</a>.
+    A collaborative platform to create a complete static GTFS set of the STM network, including school and industrial trips. Made possible with the help of many <a href="#Acknowledgements">contributors</a>.
     <br />
     <a href="https://extras.transittracker.ca"><strong>Launch the app »</strong></a>
     <br />
