@@ -1,8 +1,8 @@
 <div class="h-full bg-secondary-100 p-3 md:p-8 flex flex-col">
     <div class="flex items-center justify-between" x-data="{ urlView: false }">
-        <h1 class="mt-20 md:mt-16 text-lg md:text-2xl text-bold">Downloads</h1>
+        <h1 class="text-lg md:text-2xl text-bold">Downloads</h1>
         <a download="gtfs_stm_extended.zip" href="{{ \Illuminate\Support\Facades\Storage::url('latest/gtfs_stm_extended.zip') }}"
-           title="gtfs_stm_extended.zip" class="mt-20 md:mt-16 bg-secondary-500 p-2 rounded">
+           title="gtfs_stm_extended.zip" class="bg-secondary-500 p-2 rounded">
             Latest ZIP
             <svg class="ml-2 w-6 h-6 float-right" fill="currentColor" viewBox="0 0 24 24">
                 <path fill="currentColor"

@@ -1,6 +1,6 @@
 <div class="flex flex-col md:flex-row h-full">
     <div class="flex-1 md:shadow-lg bg-white mt-20 md:mt-0 h-half md:h-full">
-        <div class="p-3 md:flex justify-between border-b border-gray-200 bg-white sticky top-20 md:top-16">
+        <div class="p-3 md:flex justify-between border-b border-gray-200 bg-white sticky top-20 md:top-16 md:h-16">
             <div class="flex justify-between gap-2 w-full">
                 <input aria-label="Search by id" wire:model="searchId" type="text"
                        class="appearance-none rounded px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm w-full"
@@ -10,7 +10,7 @@
                        placeholder="Search by name...">
             </div>
         </div>
-        <ul class="text-sm md:text-base md:mt-16 max-h-40-screen md:max-h-full overflow-auto">
+        <ul class="text-sm md:text-base max-h-40-screen md:max-h-(screen-32) overflow-auto">
             @forelse($stops as $stop)
                 <li class="flex items-center cursor-pointer hover:bg-secondary-300 p-2 md:p-3 transition-colors duration-200 ease-in-out {{ !$selectedStop ? '' : ($selectedStop->stop_id === $stop->stop_id ? 'bg-secondary-200' : '') }}"
                     wire:click="selectStop({{ $stop->stop_id }})" wire:key="{{ $stop->stop_id }}">
@@ -23,9 +23,9 @@
             {{ $stops->links('livewire.custom-pagination') }}
         </ul>
     </div>
-    <div class="flex-1 p-3 md:p-8 bg-gray-200 h-half md:h-full">
+    <div class="flex-1 p-3 md:p-8 bg-gray-200 h-half md:h-(screen-16) overflow-x-auto"">
         @if($selectedStop)
-            <div class="md:sticky md:top-24 text-sm md:text-base">
+            <div class="text-sm md:text-base">
                 <div class="md:flex items-center mb-4">
                     <h1 class="text-xl md:text-2xl flex-grow">Stop <b>{{ $selectedStop->stop_id }}</b> {{ $selectedStop->stop_name }}</h1>
                 </div>

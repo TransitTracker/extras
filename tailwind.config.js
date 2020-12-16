@@ -33,10 +33,19 @@ module.exports = {
           green: '#3b9b74',
           yellow: '#f7e200',
         },
+        felixinx: {
+          'blue-300': '#566877',
+          'blue-500': '#0e273c',
+          'green-400': '#70B68E',
+          'green-500': '#32965d',
+          orange: '#d65108',
+          yellow: '#efa00b',
+        },
       },
-      height: {
+      height: (theme) => ({
         'half': '50vh',
-      },
+        '(screen-16)':  `calc(100vh - ${theme('spacing.16')})`,
+      }),
     },
     inset: {
       0: 0,
@@ -47,10 +56,11 @@ module.exports = {
       24: '6rem',
       32: '8rem',
     },
-    maxHeight: {
+    maxHeight: (theme) => ({
       'full': '100%',
       '40-screen': '40vh',
-    },
+      '(screen-32)':  `calc(100vh - ${theme('spacing.32')})`,
+    }),
   },
   variants: {
     borderWidth: ['last'],
