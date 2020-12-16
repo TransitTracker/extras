@@ -11,7 +11,7 @@ use App\Nebula\Resources\StopTimeResource;
 use App\Nebula\Resources\SuggestionResource;
 use App\Nebula\Resources\TripResource;
 use App\Nebula\Resources\UserResource;
-use Larsklopstra\Nebula\Http\Middleware\NebulaIPAuthStrategy;
+use Larsklopstra\Nebula\Http\Middleware\NebulaEmailAuthStrategy;
 
 return [
 
@@ -21,14 +21,14 @@ return [
 
     'domain' => null,
 
-    'auth_strategy' => NebulaIPAuthStrategy::class,
+    'auth_strategy' => NebulaEmailAuthStrategy::class,
 
     'allowed_ips' => [
-        '127.0.0.1',
+        // '127.0.0.1',
     ],
 
     'allowed_emails' => [
-        // 'admin@example.com',
+        env('NEBULA_EMAIL'),
     ],
 
     'resources' => [
