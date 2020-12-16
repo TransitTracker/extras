@@ -33,4 +33,15 @@
         <script src="{{ url(mix('js/app.js')) }}"></script>
         @livewireScripts
     </body>
+
+    <style>
+        @media (min-width: 768px) {
+            .md\:h-\(screen-16\) {
+                height: calc(100vh - 4rem);
+            }
+            .md\:max-h-\(screen-32\) {
+                max-height: calc(100vh - 8rem);
+            }
+        }
+    </style>
 </html>
