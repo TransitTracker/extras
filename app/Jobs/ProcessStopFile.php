@@ -8,14 +8,15 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use League\Csv\Reader;
 
 class ProcessStopFile implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    private $stopFileUrl;
 
     /**
      * The number of seconds the job can run before timing out.
@@ -24,14 +25,16 @@ class ProcessStopFile implements ShouldQueue
      */
     public $timeout = 180;
 
+    private $stopFile;
+
     /**
      * Create a new job instance.
      *
-     * @param string $stopFileUrl
+     * @param string $stopFile
      */
-    public function __construct(string $stopFileUrl)
+    public function __construct(string $stopFile)
     {
-        $this->stopFileUrl = $stopFileUrl;
+        $this->stopFile = $stopFile;
     }
 
     /**
@@ -41,15 +44,17 @@ class ProcessStopFile implements ShouldQueue
      */
     public function handle()
     {
-        $response = Http::get($this->stopFileUrl);
+        $file = Storage::get($this->stopFile);
 
-        $csv = Reader::createFromString($response->body())->setHeaderOffset(0);
+        $csv = Reader::createFromString($file)->setHeaderOffset(0);
         $csvStops = $csv->getRecords();
 
+        $stops = [];
         foreach ($csvStops as $csvStop) {
-            Stop::updateOrCreate(
-                ['stop_id' => $csvStop['stop_id']],
+            array_push(
+                $stops,
                 [
+                    'stop_id' => $csvStop['stop_id'],
                     'stop_code' => $csvStop['stop_code'],
                     'stop_name' => $csvStop['stop_name'],
                     'stop_lat' => $csvStop['stop_lat'],
@@ -62,5 +67,11 @@ class ProcessStopFile implements ShouldQueue
                 ]
             );
         }
+
+        collect($stops)
+            ->chunk(2500)
+            ->each(function (Collection $chunk) {
+                Stop::upsert($chunk->all(), ['stop_id'], []);
+            });
     }
 }

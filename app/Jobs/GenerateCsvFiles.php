@@ -15,6 +15,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use League\Csv\Reader;
 use League\Csv\Writer;
 use ZipArchive;
 
@@ -44,13 +45,24 @@ class GenerateCsvFiles implements ShouldQueue
 
         // Create directory structure
         Storage::makeDirectory($folder);
+
+        Storage::put($folder . '/extras_calendar.txt', '');
+        Storage::put($folder . '/extras_routes.txt', '');
+        Storage::put($folder . '/extras_stop_times.txt', '');
+        Storage::put($folder . '/extras_trips.txt', '');
+
         Storage::put($folder . '/agency.txt', '');
-        Storage::put($folder . '/calendar.txt', '');
+        Storage::copy('original/calendar.txt', $folder . '/calendar.txt');
+        Storage::copy('original/calendar_dates.txt', $folder . '/calendar_dates.txt');
+        Storage::copy('original/fare_attributes.txt', $folder . '/fare_attributes.txt');
+        Storage::copy('original/fare_rules.txt', $folder . '/fare_rules.txt');
         Storage::put($folder . '/feed_info.txt', '');
-        Storage::put($folder . '/routes.txt', '');
-        Storage::put($folder . '/stop_times.txt', '');
+        Storage::copy('original/frequencies.txt', $folder . '/frequencies.txt');
+        Storage::copy('original/routes.txt', $folder . '/routes.txt');
+        Storage::copy('original/shapes.txt', $folder . '/shapes.txt');
+        Storage::copy('original/stop_times.txt', $folder . '/stop_times.txt');
         Storage::put($folder . '/stops.txt', '');
-        Storage::put($folder . '/trips.txt', '');
+        Storage::copy('original/trips.txt', $folder . '/trips.txt');
 
         // agency.txt
         $agencyColumns = [
@@ -65,16 +77,29 @@ class GenerateCsvFiles implements ShouldQueue
         }
 
         // calendar.txt
-        $calendarColumns = [
+        $services = collect(Route::all());
+        $servicesCollection = $services->map(function ($item) {
+            return [
+                'service_id' => $item->service_id,
+                'monday' => $item->monday,
+                'tuesday' => $item->tuesday,
+                'wednesday' => $item->wednesday,
+                'thursday' => $item->thursday,
+                'friday' => $item->friday,
+                'saturday' => $item->saturday,
+                'sunday' => $item->sunday,
+                'start_date' => $item->start_date,
+                'end_date' => $item->end_date,
+            ];
+        });
+        $calendarWriter = Writer::createFromPath(storage_path('app/') . $folder . '/extras_calendar.txt', 'w+');
+        $calendarWriter->insertOne([
             'service_id', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'start_date',
             'end_date'
-        ];
-        $calendar = Calendar::select($calendarColumns)->get();
-        $calendarWriter = Writer::createFromPath(storage_path('app/') . $folder . '/calendar.txt', 'w+');
-        $calendarWriter->insertOne($calendarColumns);
-        foreach ($calendar as $calendar) {
-            $calendarWriter->insertOne($calendar->toArray());
-        }
+        ]);
+        $calendarWriter->insertAll($servicesCollection);
+        $completeCalendarWriter = Writer::createFromPath(storage_path("app/{$folder}/calendar.txt"), 'a+');
+        $completeCalendarWriter->insertAll($servicesCollection);
 
         // feed_info.txt
         $feedInfoColumns = [
@@ -101,12 +126,14 @@ class GenerateCsvFiles implements ShouldQueue
                 'route_text_color' => $item->route_text_color
             ];
         });
-        $routesWriter = Writer::createFromPath(storage_path('app/') . $folder . '/routes.txt', 'w+');
+        $routesWriter = Writer::createFromPath(storage_path('app/') . $folder . '/extras_routes.txt', 'w+');
         $routesWriter->insertOne([
             'route_id', 'agency_id', 'route_short_name', 'route_long_name', 'route_type', 'route_url', 'route_color',
             'route_text_color'
         ]);
         $routesWriter->insertAll($routesCollection);
+        $completeRoutesWriter = Writer::createFromPath(storage_path("app/{$folder}/routes.txt"), 'a+');
+        $completeRoutesWriter->insertAll($routesCollection);
 
 
         // stops.txt
@@ -132,11 +159,13 @@ class GenerateCsvFiles implements ShouldQueue
                 'stop_sequence' => $item->stop_sequence
             ];
         });
-        $stopTimesWriter = Writer::createFromPath(storage_path('app/') . $folder . '/stop_times.txt', 'w+');
+        $stopTimesWriter = Writer::createFromPath(storage_path('app/') . $folder . '/extras_stop_times.txt', 'w+');
         $stopTimesWriter->insertOne([
             'trip_id', 'arrival_time', 'departure_time', 'stop_id', 'stop_sequence'
         ]);
         $stopTimesWriter->insertAll($stopTimesCollection);
+        $completeStopTimesWriter = Writer::createFromPath(storage_path("app/{$folder}/stop_times.txt"), 'a+');
+        $completeStopTimesWriter->insertAll($stopTimesCollection);
 
         // trips.txt
         $trips = collect(Trip::all());
@@ -153,36 +182,55 @@ class GenerateCsvFiles implements ShouldQueue
                 'note_en' => $item->note_en
             ];
         });
-        $tripsWriter = Writer::createFromPath(storage_path('app/') . $folder . '/trips.txt', 'w+');
+        $tripsWriter = Writer::createFromPath(storage_path('app/') . $folder . '/extras_trips.txt', 'w+');
         $tripsWriter->insertOne([
             'route_id', 'service_id', 'trip_id', 'trip_headsign', 'direction_id', 'shape_id', 'wheelchair_accessible',
             'note_fr', 'note_en'
         ]);
         $tripsWriter->insertAll($tripsCollection);
+        $completeTripsWriter = Writer::createFromPath(storage_path("app/{$folder}/trips.txt"), 'a+');
+        $completeTripsWriter->insertAll($tripsCollection);
 
         // Create a ZIP file
         $zip = new ZipArchive();
-        $files = Storage::files($folder);
+        $files = [
+            'agency.txt',
+            'calendar.txt',
+            'calendar_dates.txt',
+            'fare_attributes.txt',
+            'fare_rules.txt',
+            'feed_info.txt',
+            'frequencies.txt',
+            'routes.txt',
+            'shapes.txt',
+            'stop_times.txt',
+            'stops.txt',
+            'trips.txt',
+        ];
 
-        if ($zip->open(storage_path('app/') . $folder . '/gtfs_stm_extended.zip', ZipArchive::CREATE) === true) {
-            foreach ($files as $key => $value) {
-                $zip->addFile(storage_path('app/') . $value, basename($value));
+        if ($zip->open(storage_path("app/{$folder}/gtfs_stm_extended.zip"), ZipArchive::CREATE) === true) {
+            foreach ($files as $file) {
+                $zip->addFile(storage_path("app/{$folder}/{$file}"), basename($file));
             }
 
             $zip->close();
         }
         
         // Create symlink to latest folder
-        symlink(storage_path("app/{$folder}"), storage_path('app/public/latest'));
+        Storage::copy("$folder/gtfs_stm_extended.zip", 'public/latest/gtfs_stm_extended.zip');
 
         // Clean all writers
         $agencyWriter = null;
         $calendarWriter = null;
+        $completeCalendarWriter = null;
         $feedInfoWriter = null;
         $routesWriter = null;
+        $completeRoutesWriter = null;
         $stopsWriter = null;
         $stopTimesWriter = null;
+        $completeStopTimesWriter = null;
         $tripsWriter = null;
+        $completeTripsWriter = null;
         $zip = null;
     }
 }

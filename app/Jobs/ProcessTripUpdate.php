@@ -2,9 +2,12 @@
 
 namespace App\Jobs;
 
+use App\Models\Gtfs\Calendar;
+use App\Models\Gtfs\Route;
 use App\Models\Gtfs\Stop as StaticStop;
 use App\Models\Gtfs\StopTime;
 use App\Models\Gtfs\Trip;
+use App\Models\Period;
 use App\Models\Sight;
 use FelixINX\TransitRealtime\FeedMessage;
 use GuzzleHttp\Client;
@@ -40,8 +43,7 @@ class ProcessTripUpdate implements ShouldQueue
         // Get the PB file
         $client = new Client();
         if (App::environment('local')) {
-            $response = $client->get('https://extras.transittracker.ca/storage/tu.pb');
-//            $response = $client->get('http://stm-school-industrial-catcher.test/storage/test.pb');
+            $response = $client->get('http://stm-school-industrial-catcher.test/storage/test.pb');
         } else {
             $response = $client->request('POST', 'https://api.stm.info/pub/od/gtfs-rt/ic/v1/tripUpdates', [
                 'headers' => [
@@ -57,15 +59,35 @@ class ProcessTripUpdate implements ShouldQueue
 
         // Get each entity
         foreach ($feed->getEntity() as $entity) {
-            // Keep only entity with E or I
             $routeId = $entity->getTripUpdate()->getTrip()->getRouteId();
-            if (strpos($routeId, 'E') !== false or strpos($routeId, 'I') !== false) {
+            $routeType = null;
+            if (strpos($routeId, 'E')) {
+                $routeType = 'E';
+            } else if (strpos($routeId, 'I')) {
+                $routeType = 'I';
+            }
+
+            // Keep only entity with E or I
+            if ($routeType) {
+                // Create the route if it dosen't exist
+                Route::firstOrCreate(
+                    ['route_id' => $routeId],
+                    [
+                        'agency_id' => 'STM',
+                        'route_short_name' => $routeId,
+                        'route_long_name' => $routeType === 'E' ? 'Ecole' : 'Industriel',
+                        'route_color' => $routeType === 'E' ? '#3b9b74' : '#f7e200',
+                        'route_text_color' => $routeType === 'E' ? '#ffffff' : '#000000',
+                    ]
+                );
+
+
                 // Search if existing trip, create it if needed
-                $trip = Trip::firstOrCreate(
+                $trip = Trip::updateOrCreate(
                     ['trip_id' => $entity->getId()],
                     [
-                        'gtfs_route_id' => $routeId,
-                        'trip_headsign' => 'TBD',
+                        'route_id' => $routeId,
+                        'trip_headsign' => 'TBD «» TBD',
                         'note_en' => $entity->getTripUpdate()->getTrip()->getStartTime(),
                     ]
                 );
@@ -93,7 +115,7 @@ class ProcessTripUpdate implements ShouldQueue
                     }
 
                     // Check if stops exists
-                    $stop = StaticStop::firstOrCreate(
+                    StaticStop::firstOrCreate(
                         ['stop_id' => $item->getStopId()],
                         [
                             'stop_code' => $item->getStopId(),
@@ -105,7 +127,7 @@ class ProcessTripUpdate implements ShouldQueue
                     );
 
                     // Create a GTFS Stop Time
-                    $stopTime = StopTime::firstOrCreate(
+                    StopTime::firstOrCreate(
                         [
                             'trip_id' => $entity->getId(),
                             'stop_id' => $item->getStopId(),
@@ -121,17 +143,39 @@ class ProcessTripUpdate implements ShouldQueue
 
                 // Create the sight
                 $sight = Sight::updateOrCreate(
-                    ['trip_id' => $trip->id],
+                    ['trip_id' => $trip->trip_id],
                     [
                         strtolower(date('l')) => true
                     ]
                 );
-                $trip->sight_id = $sight->id;
+
+                // Get service
+                $service = Calendar::firstOrCreate(
+                    [ 'service_id' => "{$this->getPeriod()->period}-EXTRAS{$routeType}-{$sight->service_pattern}"],
+                    [
+                        'monday' => $sight->monday,
+                        'tuesday' => $sight->tuesday,
+                        'wednesday' => $sight->wednesday,
+                        'thursday' => $sight->thursday,
+                        'friday' => $sight->friday,
+                        'saturday' => $sight->saturday,
+                        'sunday' => $sight->sunday,
+                        'start_date' => $this->getPeriod()->start_date,
+                        'end_date' => $this->getPeriod()->end_date,
+                    ]
+                );
+                $trip->service_id = $service->service_id;
+
                 $trip->save();
             }
         }
 
         // Clear the client
         $client = null;
+    }
+
+    private function getPeriod ()
+    {
+        return Period::whereDate('start_date', '<=', today())->whereDate('end_date', '>=', today())->first();
     }
 }

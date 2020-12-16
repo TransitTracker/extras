@@ -2,6 +2,7 @@
 
 use App\Nebula\Resources\AgencyResource;
 use App\Nebula\Resources\CalendarResource;
+use App\Nebula\Resources\PeriodResource;
 use App\Nebula\Resources\FeedInfoResource;
 use App\Nebula\Resources\GtfsAgencyResource;
 use App\Nebula\Resources\RouteResource;
@@ -40,6 +41,7 @@ return [
         new StopResource,
         new StopTimeResource,
         new TripResource,
+        new PeriodResource,
     ],
 
     'dashboards' => [

@@ -23,4 +23,9 @@ class Sight extends Model
     {
         return $this->belongsTo(StaticTrip::class);
     }
+
+    public function getServicePatternAttribute()
+    {
+        return "{$this->monday}{$this->tuesday}{$this->wednesday}{$this->thursday}{$this->friday}{$this->saturday}{$this->sunday}";
+    }
 }

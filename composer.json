@@ -14,12 +14,13 @@
         "felixinx/gtfs-realtime-protobuf-php": "@dev",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.1",
+        "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "larsklopstra/nebula": "^0.4",
         "league/csv": "^9.6",
-        "livewire/livewire": "^2.0"
+        "livewire/livewire": "^2.0",
+        "ext-zip": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
