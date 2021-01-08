@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Home')
+
 @section('content')
     <div class="flex flex-col md:flex-row h-full bg-secondary-200">
         <a href="https://github.com/transittracker/extras" class="block absolute bottom-3 md:bottom-8 left-3 md:left-8">

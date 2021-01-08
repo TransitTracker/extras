@@ -1,3 +1,5 @@
+@section('title', 'Stops')
+
 <div class="flex flex-col md:flex-row h-full">
     <div class="flex-1 md:shadow-lg bg-white mt-20 md:mt-0 h-half md:h-full">
         <div class="p-3 md:flex justify-between border-b border-gray-200 bg-white sticky top-20 md:top-16 md:h-16">
@@ -23,7 +25,7 @@
             {{ $stops->links('livewire.custom-pagination') }}
         </ul>
     </div>
-    <div class="flex-1 p-3 md:p-8 bg-gray-200 h-half md:h-(screen-16) overflow-x-auto"">
+    <div class="flex-1 p-3 md:p-8 bg-secondary-100 h-half md:h-(screen-16) overflow-x-auto"">
         @if($selectedStop)
             <div class="text-sm md:text-base">
                 <div class="md:flex items-center mb-4">
@@ -70,7 +72,7 @@
                         </div>
                     @endif
                     @if(count($selectedStop->suggestions) > 0)
-                        <div class="p-1 md:p-3 bg-gray-100 text-sm" x-bind:style="open ? '' : 'display:none'">
+                        <div class="p-1 md:p-3 bg-white text-sm" x-bind:style="open ? '' : 'display:none'">
                             <b>Previous suggestions:</b>
                             <ul>
                                 @foreach($selectedStop->suggestions as $suggestion)
@@ -117,7 +119,7 @@
                         @endif
                     </div>
                 </div>
-                <table class="rounded border-b border-gray-200 text-xs md:text-base w-full bg-gray-100">
+                <table class="rounded border-b border-gray-200 text-xs md:text-base w-full bg-white">
                     <thead class="bg-gray-500 text-white">
                     <tr>
                         <th class="text-left p-1 md:p-2">Trip ID</th>

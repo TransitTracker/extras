@@ -32,6 +32,7 @@ module.exports = {
         stm: {
           green: '#3b9b74',
           yellow: '#f7e200',
+          blue: '#00aeef',
         },
         felixinx: {
           'blue-300': '#566877',
@@ -46,6 +47,9 @@ module.exports = {
         'half': '50vh',
         '(screen-16)':  `calc(100vh - ${theme('spacing.16')})`,
       }),
+      width: {
+        half: '50%',
+      },
     },
     inset: {
       0: 0,
