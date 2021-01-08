@@ -3,6 +3,7 @@
 namespace App\Nebula\Resources;
 
 use App\Models\Gtfs\Calendar;
+use App\Models\Period;
 use Larsklopstra\Nebula\Contracts\NebulaResource;
 use Larsklopstra\Nebula\Fields\Boolean;
 use Larsklopstra\Nebula\Fields\Date;
@@ -24,5 +25,10 @@ class PeriodResource extends NebulaResource
             Date::make('Start Date')->format('Ymd'),
             Date::make('End Date')->format('Ymd'),
         ];
+    }
+
+    public function model()
+    {
+        return Period::class;
     }
 }

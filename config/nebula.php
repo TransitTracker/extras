@@ -4,7 +4,6 @@ use App\Nebula\Resources\AgencyResource;
 use App\Nebula\Resources\CalendarResource;
 use App\Nebula\Resources\PeriodResource;
 use App\Nebula\Resources\FeedInfoResource;
-use App\Nebula\Resources\GtfsAgencyResource;
 use App\Nebula\Resources\RouteResource;
 use App\Nebula\Resources\StopResource;
 use App\Nebula\Resources\StopTimeResource;
@@ -15,7 +14,7 @@ use Larsklopstra\Nebula\Http\Middleware\NebulaEmailAuthStrategy;
 
 return [
 
-    'name' => 'Nebula',
+    'name' => 'Extras Catcher',
 
     'prefix' => '/nebula',
 
