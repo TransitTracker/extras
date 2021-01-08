@@ -9,6 +9,7 @@ use App\Models\Gtfs\Route;
 use App\Models\Gtfs\Stop;
 use App\Models\Gtfs\StopTime;
 use App\Models\Gtfs\Trip;
+use App\Models\Period;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -169,6 +170,7 @@ class GenerateCsvFiles implements ShouldQueue
 
         // trips.txt
         $trips = collect(Trip::all());
+//        $trips = collect(Trip::where('service_id', 'LIKE', "{$this->getPeriod()->period}-%")->get());
         $tripsCollection = $trips->map(function ($item, $key) {
             return [
                 'route_id' => $item->route->route_id,
@@ -232,5 +234,10 @@ class GenerateCsvFiles implements ShouldQueue
         $tripsWriter = null;
         $completeTripsWriter = null;
         $zip = null;
+    }
+
+    private function getPeriod (): Period
+    {
+        return Period::whereDate('start_date', '<=', today())->whereDate('end_date', '>=', today())->first();
     }
 }
